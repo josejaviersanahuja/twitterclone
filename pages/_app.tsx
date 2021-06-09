@@ -46,7 +46,7 @@ interface Style {
 
 function Style({anchorColor, letraColor}:Style){
     return (
-    <style jsx={true}>{`
+    <style jsx>{`
     
     a {
       color: ${anchorColor};

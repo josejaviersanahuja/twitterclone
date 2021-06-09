@@ -7,13 +7,13 @@ export default function Twits() {
             Esta es la página de twits
           </h1>
         </main>
-      <Style />
+      <TwitStyle />
     </>)
   }
   
-  function Style(){
+  function TwitStyle(){
     return (
-    <style jsx={true}>{`
+    <style jsx>{`
     main {
       width:100%;
       height:100vh;

@@ -12,13 +12,13 @@ export default function Home() {
           Welcome to <Link href="https://nextjs.org">Next.js!</Link>
         </h1>
       </main>
-    <Style />
+    <HomeStyle />
   </>)
 }
 
-function Style(){
+function HomeStyle(){
   return (
-  <style jsx={true}>{`
+  <style jsx>{`
   main {
     width:100%;
     height:100vh;

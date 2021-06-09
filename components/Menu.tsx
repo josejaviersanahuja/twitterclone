@@ -34,7 +34,7 @@ interface Style {
 
 function Style({botonBackGroundColor, botonColor, botonBackGroundColorHover}:Style){
     return (
-    <style jsx={true}>{`
+    <style jsx>{`
     
     button {
         font-family: inherit;
