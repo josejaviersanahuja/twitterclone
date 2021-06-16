@@ -8,7 +8,8 @@ interface GlobalStyle {
 export const colors = {
     primary: "#efefef",
     secondary: "#000020",
-    third: '#1c54cc',
+    third: '#00a2f5',
+    fourth: '#604af9',
 }
 
 export default function StyleGlobal ({fondoColor, letraColor,  anchorColor}:GlobalStyle) {
@@ -16,6 +17,8 @@ export default function StyleGlobal ({fondoColor, letraColor,  anchorColor}:Glob
     return  <style jsx global>
     {`html,  body {
               background-color: ${fondoColor};
+              display:grid;
+              place-content:center;
               background-image: 
                 radial-gradient(${addOpacity({color:letraColor, porcentaje:0.3})} 1px, transparent 1px),
                 radial-gradient(${addOpacity({color:letraColor, porcentaje:0.3})} 1px, transparent 1px);
@@ -28,6 +31,19 @@ export default function StyleGlobal ({fondoColor, letraColor,  anchorColor}:Glob
           }
           span {
               color:${colors.third}
+          }
+          main {
+            display: flex;
+            flex-direction:column;
+            background:${colors.primary};
+            width:100%;
+            max-width: 500px;
+            height:100vh;
+            justify-content:center;
+            align-items:center; 
+            box-shadow: 0 6px 2px -4px rgba(0, 0, 0, 0.2),
+            0 4px 4px 0 rgba(0, 0, 0, 0.14),
+            0 2px 10px 0 rgba(0, 0, 0, 0.12);
           }
     
           a {
