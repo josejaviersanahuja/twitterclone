@@ -1,7 +1,8 @@
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import StyleGlobal, {colors} from '../styles/StyleGlobal'
-import { lighten, darken, addOpacity } from '../styles/styleUtils'
+import firebase from 'firebase'
+console.log(firebase);
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   
