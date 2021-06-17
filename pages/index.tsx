@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { colors } from '../styles/StyleGlobal'
 import Avatar from '../components/Avatar'
 import { MouseEventHandler, useState, useEffect } from 'react'
@@ -5,24 +6,23 @@ import Image from 'next/image'
 import { loginWithGitHub, User, onAuthStateChange } from '../firebase/client'
 import LoginBotons from '../components/LoginBotons/LoginBotons'
 
-export default function Home() {
+export default function Home () {
   const [user, setuser] = useState<User | null | undefined>(null)
 
   useEffect(() => {
     onAuthStateChange(setuser)
     return () => {
-      
+
     }
   }, [])
 
   const handleClick : MouseEventHandler = () :void => {
-    
     loginWithGitHub().then(user => {
-      console.log(user);
+      console.log(user)
       setuser(user)
     })
   }
-  
+
   return (
   <>
       <main >
@@ -31,10 +31,9 @@ export default function Home() {
         <h1>Twitter <span>Clone</span></h1>
         <h2>Talk to everybody about</h2>
         <h2><span>Religion and politics</span></h2>
-        <LoginBotons handleClick={handleClick} />
-        {user === undefined && <p>es undefined</p>}
-         {user === null && <p>es null</p>}
-         { user? <Avatar  user={user}/>
+        {user === undefined && <LoginBotons handleClick={handleClick} />}
+        { user
+          ? <Avatar user={user}/>
           : null}
         </section>
       </main>
@@ -42,7 +41,7 @@ export default function Home() {
   </>)
 }
 
-function HomeStyle(){
+function HomeStyle () {
   return (
   <style jsx>{`
  
@@ -66,4 +65,3 @@ function HomeStyle(){
   </style>
   )
 }
-

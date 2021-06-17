@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react'
+/* eslint-disable react/react-in-jsx-scope */
+import { ReactElement } from 'react'
 import { User } from '../../firebase/client'
 import Image from 'next/image'
 
@@ -6,11 +7,11 @@ interface ProfileProps {
     user: User
 }
 
-export default function Avatar({user}: ProfileProps): ReactElement {
-    const myLoader = () => {
-        return `${user.avatar}`
-      }
-    return (
+export default function Avatar ({ user }: ProfileProps): ReactElement {
+  const myLoader = () => {
+    return `${user.avatar}`
+  }
+  return (
         <>
         <div>
            <Image
@@ -19,17 +20,17 @@ export default function Avatar({user}: ProfileProps): ReactElement {
             alt="avatar"
             width={100}
             height={100}
-          />  
+          />
           <strong>{user.username}</strong>
           <AvatarStyle/>
           </div>
 
         </>
-    )
+  )
 }
 
-function AvatarStyle(){
-    return (
+function AvatarStyle () {
+  return (
     <style jsx>{`
     div {
         display: flex;
@@ -46,6 +47,5 @@ function AvatarStyle(){
     }
     `}
     </style>
-    )
-  }
-  
+  )
+}
