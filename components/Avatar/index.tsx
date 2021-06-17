@@ -12,14 +12,40 @@ export default function Avatar({user}: ProfileProps): ReactElement {
       }
     return (
         <>
+        <div>
            <Image
             loader={myLoader}
             src={myLoader()}
             alt="avatar"
-            width={150}
-            height={150}
+            width={100}
+            height={100}
           />  
-          <p>User name: {user.username}</p>
+          <strong>{user.username}</strong>
+          <AvatarStyle/>
+          </div>
+
         </>
     )
 }
+
+function AvatarStyle(){
+    return (
+    <style jsx>{`
+    div {
+        display: flex;
+        flex-direction: row;
+        align-items:center;
+        height: auto;
+    }
+    img {
+      border-radius:50%;
+      margin: auto;
+    }
+    strong {
+        margin: auto;
+    }
+    `}
+    </style>
+    )
+  }
+  

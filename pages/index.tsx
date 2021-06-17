@@ -18,7 +18,6 @@ export default function Home() {
   const handleClick : MouseEventHandler = () :void => {
     
     loginWithGitHub().then(user => {
-      const {avatar, username} = user
       console.log(user);
       setuser(user)
     })
@@ -63,36 +62,8 @@ function HomeStyle(){
     background: ${colors.primary};
    
   }
-  img {
-    border-radius:50%;
-  }
   `}
   </style>
   )
 }
 
-/* 
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-analytics.js"></script>
-
-<script>
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  var firebaseConfig = {
-    apiKey: "AIzaSyAYbxDAxdQCdtP9OsH-jx2pKx7pTgCaj9U",
-    authDomain: "twitter-clone-d82aa.firebaseapp.com",
-    projectId: "twitter-clone-d82aa",
-    storageBucket: "twitter-clone-d82aa.appspot.com",
-    messagingSenderId: "19699790325",
-    appId: "1:19699790325:web:5389c2602ceedcb3e5b0bc",
-    measurementId: "G-2JXZ77TLVZ"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-</script>
-*/

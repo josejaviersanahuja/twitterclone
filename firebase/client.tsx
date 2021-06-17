@@ -18,7 +18,9 @@ const firebaseConfig = {
     username: string, 
 }
 
-const getUser = (user) : User => {
+const getUser = (user: firebase.User ) : User => {
+    console.log(user);
+    
     const username: string = user.displayName
     const avatar_url : string = user.providerData[0].photoURL
     
