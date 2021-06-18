@@ -1,12 +1,10 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { AppProps } from 'next/app'
 import Head from 'next/head'
-import StyleGlobal, {colors} from '../styles/StyleGlobal'
-import firebase from 'firebase'
-console.log(firebase);
+import StyleGlobal, { colors } from '../styles/StyleGlobal'
 
-export default function MyApp({ Component, pageProps }: AppProps) {
-  
-return (
+export default function MyApp ({ Component, pageProps }: AppProps) {
+  return (
 <>
     <Head>
         <title>TwitterClone by ZitrojjDev</title>
@@ -14,35 +12,22 @@ return (
         <link rel="icon" href="/favicon.ico" />
         <script src="https://kit.fontawesome.com/24c4ab104d.js" crossOrigin="anonymous"></script>
     </Head>
-     
+
     <Component {...pageProps} />
 
     <Style />
     <StyleGlobal fondoColor={colors.primary} letraColor={colors.secondary} anchorColor={colors.third}/>
 
 </>
-)}
-// practica personal?: los estilos que afectan el layout de un componente, se escriben en su componente padre. pero los atributos de color y forma se escriben en el propio componente?
-interface Style {
-  
+  )
 }
+// practica personal?: los estilos que afectan el layout de un componente, se escriben en su componente padre. pero los atributos de color y forma se escriben en el propio componente?
 
-function Style({}:Style){
-    return (
+function Style () {
+  return (
     <style jsx>{`
   
-    header {
-      width:100%;
-      height: 10vh;
-      display: flex;
-      flex-direction:row;
-      align-items: center;
-      padding: 0 2rem;
-      background-color: #00000022
-    }
-    
   `}
     </style>
-    )
-  }
-  
+  )
+}

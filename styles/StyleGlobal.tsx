@@ -1,27 +1,27 @@
-import { addOpacity, lighten } from "./styleUtils"
+/* eslint-disable react/react-in-jsx-scope */
+import { addOpacity } from './styleUtils'
 interface GlobalStyle {
     fondoColor:string, // de cualquier color #FFF || #FFFFFF || rgb(0,0,0) || rgba(0,0,0,0)
-    letraColor:string, 
+    letraColor:string,
     anchorColor:string
 }
 
 export const colors = {
-    primary: "#efefef",
-    secondary: "#000020",
-    third: '#00a2f5',
-    fourth: '#604af9',
+  primary: '#efefef',
+  secondary: '#000020',
+  third: '#00a2f5',
+  fourth: '#604af9'
 }
 
-export default function StyleGlobal ({fondoColor, letraColor,  anchorColor}:GlobalStyle) {
-    
-    return  <style jsx global>
+export default function StyleGlobal ({ fondoColor, letraColor, anchorColor }:GlobalStyle) {
+  return <style jsx global>
     {`html,  body {
               background-color: ${fondoColor};
               display:grid;
               place-content:center;
               background-image: 
-                radial-gradient(${addOpacity({color:letraColor, porcentaje:0.3})} 1px, transparent 1px),
-                radial-gradient(${addOpacity({color:letraColor, porcentaje:0.3})} 1px, transparent 1px);
+                radial-gradient(${addOpacity({ color: letraColor, porcentaje: 0.3 })} 1px, transparent 1px),
+                radial-gradient(${addOpacity({ color: letraColor, porcentaje: 0.3 })} 1px, transparent 1px);
               background-position: 0 0, 25px 25px;
               background-size: 50px 50px;
               color: ${letraColor};
@@ -36,11 +36,11 @@ export default function StyleGlobal ({fondoColor, letraColor,  anchorColor}:Glob
             display: flex;
             flex-direction:column;
             background:${colors.primary};
-            width:100%;
+            width:100vw;
             max-width: 500px;
             height:100vh;
-            justify-content:center;
-            align-items:center; 
+            padding: 2rem 0;
+            overflow-Y: scroll;
             box-shadow: 0 6px 2px -4px rgba(0, 0, 0, 0.2),
             0 4px 4px 0 rgba(0, 0, 0, 0.14),
             0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -58,5 +58,4 @@ export default function StyleGlobal ({fondoColor, letraColor,  anchorColor}:Glob
           }
       `}
     </style>
-    }
-    
+}

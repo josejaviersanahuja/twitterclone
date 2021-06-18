@@ -33,7 +33,7 @@ export default function Home () {
         <h2><span>Religion and politics</span></h2>
         {user === undefined && <LoginBotons handleClick={handleClick} />}
         { user
-          ? <Avatar user={user}/>
+          ? <Avatar user={user} displayName/>
           : null}
         </section>
       </main>
@@ -59,8 +59,9 @@ function HomeStyle () {
     border-bottom: 1px solid ${colors.third};
     padding:1rem;
     background: ${colors.primary};
-   
+    margin: auto;
   }
+  
   `}
   </style>
   )
