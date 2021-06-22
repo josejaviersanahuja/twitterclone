@@ -3,7 +3,10 @@ import { ReactElement, useState, useEffect } from 'react'
 import Twit from '../../components/Twit'
 import Avatar from '../../components/Avatar'
 import { User } from '../../firebase/client'
-
+import HomeIcon from '../../icons/HomeIcon'
+import LupaIcon from '../../icons/LupaIcon'
+import LetterIcon from '../../icons/LetterIcon'
+import BellIcon from '../../icons/BellIcon'
 interface HomeProps {
     user: User
 }
@@ -36,7 +39,10 @@ export default function Home ({ user }: HomeProps): ReactElement {
             {timeline.map(twit => <Twit key={twit.id} twit={twit}/>)}
           </section>
           <footer>
-            aqui van iconos
+            <HomeIcon/>
+            <LupaIcon/>
+            <BellIcon/>
+            <LetterIcon/>
           </footer>
         </main>
         <HomeStyle/>
@@ -57,6 +63,10 @@ function HomeStyle () {
     footer {
       bottom:0;
       border-top: 1px solid lightblue;
+      display:flex;
+    }
+    footer svg {
+      margin: auto;
     }
     header {
       top:0;

@@ -17,10 +17,7 @@ export default function Home () {
   }, [])
 
   const handleClick : MouseEventHandler = () :void => {
-    loginWithGitHub().then(user => {
-      console.log(user)
-      setuser(user)
-    })
+    loginWithGitHub().catch(err => console.error(err))
   }
 
   return (
