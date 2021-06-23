@@ -1,3 +1,4 @@
 button {
-    color: lighten(#007bff, 10%)
+    justify-self: flex-end;
+
 }

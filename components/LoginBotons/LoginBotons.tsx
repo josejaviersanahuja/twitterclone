@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import React, { MouseEventHandler, ReactElement } from 'react'
 import Boton from '../Boton'
 
@@ -5,8 +6,8 @@ interface Props {
     handleClick: MouseEventHandler
 }
 
-export default function LoginBotons({handleClick}: Props): ReactElement {
-    return (
+export default function LoginBotons ({ handleClick }: Props): ReactElement {
+  return (
         <>
             <Boton
           botonBackGroundColor="#000000"
@@ -28,7 +29,7 @@ export default function LoginBotons({handleClick}: Props): ReactElement {
           <i className="fab fa-facebook fa-x"></i>
           Login with Facebook
           </>
-        </Boton>  
+        </Boton>
         </>
-    )
+  )
 }

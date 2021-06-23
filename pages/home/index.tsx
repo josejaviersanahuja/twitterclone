@@ -7,11 +7,17 @@ import HomeIcon from '../../icons/HomeIcon'
 import LupaIcon from '../../icons/LupaIcon'
 import LetterIcon from '../../icons/LetterIcon'
 import BellIcon from '../../icons/BellIcon'
+import Spinner from '../../components/Spinner'
+import BotonCompose from '../../components/BotonCompose'
+import css from 'styled-jsx/css'
 interface HomeProps {
     user: User
 }
-
-export default function Home ({ user }: HomeProps): ReactElement {
+const usuarioFicticio : User = {
+  username: 'JA',
+  avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPDjAldNLWRyOILLFa77g0XfaJO2Tu4mRia42KChSMWK8MZ6MRkIN7R5pQcvYkF1SY9Lw&usqp=CAU'
+}
+export default function Home ({ user = usuarioFicticio }: HomeProps): ReactElement {
   const [timeline, setTimeline] = useState([])
 
   useEffect(() => {
@@ -29,15 +35,13 @@ export default function Home ({ user }: HomeProps): ReactElement {
     <>
         <main>
           <header>
-            {user === undefined ? <span>loading...</span> : <Avatar user={user}/>}
+            {user === undefined ? <Spinner/> : <Avatar user={user} small={true}/>}
             <strong>Inicio</strong>
           </header>
-          <nav>
-          aqui va una seccion donde pones en que piensas
-          </nav>
           <section>
             {timeline.map(twit => <Twit key={twit.id} twit={twit}/>)}
           </section>
+          <BotonCompose/>
           <footer>
             <HomeIcon/>
             <LupaIcon/>
@@ -45,46 +49,45 @@ export default function Home ({ user }: HomeProps): ReactElement {
             <LetterIcon/>
           </footer>
         </main>
-        <HomeStyle/>
+        <style jsx>{homeStyle}</style>
         </>
   )
 }
 
-function HomeStyle () {
-  return <style jsx>{`
+const homeStyle = css`
     header, footer {
+      display:flex;
+      align-items:center;
       position: fixed;
-      height: 2rem;
+      height: 3rem;
       width: 100vw;
       max-width: 500px;
       background-color: white;
       z-index:1;
     }
+    
     footer {
       bottom:0;
       border-top: 1px solid lightblue;
       display:flex;
     }
-    footer svg {
-      margin: auto;
-    }
+    
     header {
       top:0;
       border-bottom: 1px solid lightblue;
+      padding:1rem;
     }
-    nav {
-      height:3rem;
-      width: 100vw;
-      max-width:500px;
-      border-bottom: 1px solid lightblue;
-    }
+    
     section{
+      
       }
+    
     strong {
-      margin-left: 1rem;
+      margin-left: 1.5rem;
+      font-size:1.3rem;
     }
+    
     .avatar {
       width: 55px;
     }
-  `}</style>
-}
+  `

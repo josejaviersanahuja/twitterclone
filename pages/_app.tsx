@@ -2,6 +2,7 @@
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import StyleGlobal, { colors } from '../styles/StyleGlobal'
+import css from 'styled-jsx/css'
 
 export default function MyApp ({ Component, pageProps }: AppProps) {
   return (
@@ -15,19 +16,13 @@ export default function MyApp ({ Component, pageProps }: AppProps) {
 
     <Component {...pageProps} />
 
-    <Style />
     <StyleGlobal fondoColor={colors.primary} letraColor={colors.secondary} anchorColor={colors.third}/>
-
+    <style jsx>{style}</style>
 </>
   )
 }
 // practica personal?: los estilos que afectan el layout de un componente, se escriben en su componente padre. pero los atributos de color y forma se escriben en el propio componente?
 
-function Style () {
-  return (
-    <style jsx>{`
-  
-  `}
-    </style>
-  )
-}
+const style = css`
+
+`

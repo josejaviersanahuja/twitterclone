@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 import React, { ReactElement } from 'react'
+import css from 'styled-jsx/css'
 import { TwitInfo } from '../../pages/api/timeline'
 import Avatar from '../Avatar'
 
@@ -17,17 +18,15 @@ export default function Twit ({ twit }: TwitProps): ReactElement {
           <p>{twit.message}</p>
         </pre>
       </article>
-      <TwitStyle />
+      <style jsx>{twitStyle}</style>
     </>
   )
 }
 
-function TwitStyle () {
-  return (
-    <style jsx>{`
+const twitStyle = css`
       article {
         padding: 10px 15px;
-        border: 1px solid lightblue;
+        border-top: 1px solid lightblue;
         display: flex;
         align-items:flex-start;
       }
@@ -42,7 +41,6 @@ function TwitStyle () {
       }
       h5 {
         margin-bottom: .5rem;
+        font-size:1rem;
       }
-    `}</style>
-  )
-}
+    `

@@ -15,7 +15,13 @@ export const colors = {
 
 export default function StyleGlobal ({ fondoColor, letraColor, anchorColor }:GlobalStyle) {
   return <style jsx global>
-    {`html,  body {
+    {`
+    *, *::before, *::after {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+  }
+    html,  body {
               background-color: ${fondoColor};
               display:grid;
               place-content:center;
@@ -32,8 +38,8 @@ export default function StyleGlobal ({ fondoColor, letraColor, anchorColor }:Glo
           span {
               color:${colors.third}
           }
+          
           main {
-            display: flex;
             flex-direction:column;
             background:${colors.primary};
             width:100vw;
@@ -51,11 +57,11 @@ export default function StyleGlobal ({ fondoColor, letraColor, anchorColor }:Glo
               text-decoration: none;
           }
     
-          *, *::before, *::after {
-              box-sizing: border-box;
-              padding: 0;
-              margin: 0;
+          .fotoAvatar {
+            border-radius: 50% !important;
+            margin-left: auto;
           }
+          
       `}
     </style>
 }

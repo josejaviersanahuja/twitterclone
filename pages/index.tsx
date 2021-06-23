@@ -5,8 +5,9 @@ import { MouseEventHandler, useState, useEffect } from 'react'
 import Image from 'next/image'
 import { loginWithGitHub, User, onAuthStateChange } from '../firebase/client'
 import LoginBotons from '../components/LoginBotons/LoginBotons'
+import css from 'styled-jsx/css'
 
-export default function Home () {
+export default function SignIn () {
   const [user, setuser] = useState<User | null | undefined>(null)
 
   useEffect(() => {
@@ -34,14 +35,11 @@ export default function Home () {
           : null}
         </section>
       </main>
-    <HomeStyle />
+      <style jsx>{signInStyle}</style>
   </>)
 }
 
-function HomeStyle () {
-  return (
-  <style jsx>{`
- 
+const signInStyle = css`
   button {
     margin-top:1rem;
     font-size:1.2em;
@@ -59,7 +57,4 @@ function HomeStyle () {
     margin: auto;
   }
   
-  `}
-  </style>
-  )
-}
+  `
