@@ -6,9 +6,11 @@ import { colors } from '../../styles/StyleGlobal'
 
 export default function index (): ReactElement {
   return <>
+  <aside>
   <div>
       <FeatherIcon/>
   </div>
+  </aside>
   <style jsx>{botonCompose}</style>
   <style jsx>{`
       div {
@@ -19,13 +21,20 @@ export default function index (): ReactElement {
 }
 
 const botonCompose = css`
-    div {
+    aside {
         position: fixed;
+        bottom: 3rem;
+        width: 100%;
+        max-width:500px;
+        display: flex;
+        height: 5rem;
+    }
+    div {
+        border-radius: 50%;
         width: 4rem;
         height: 4rem;
-        border-radius: 50%;
-        bottom:4rem;
-        right:15px;
-        display: flex;
+        margin-left:auto;
+        margin-right:15px;
+        display:flex;
     }
 `

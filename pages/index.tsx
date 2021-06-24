@@ -6,16 +6,19 @@ import Image from 'next/image'
 import { loginWithGitHub, User, onAuthStateChange } from '../firebase/client'
 import LoginBotons from '../components/LoginBotons/LoginBotons'
 import css from 'styled-jsx/css'
+import { useRouter } from 'next/router'
 
 export default function SignIn () {
   const [user, setuser] = useState<User | null | undefined>(null)
+  const router = useRouter()
 
   useEffect(() => {
     onAuthStateChange(setuser)
-    return () => {
-
-    }
   }, [])
+
+  useEffect(() => {
+    user && router.replace('/home')
+  }, [user])
 
   const handleClick : MouseEventHandler = () :void => {
     loginWithGitHub().catch(err => console.error(err))
