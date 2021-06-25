@@ -12,25 +12,28 @@ const firebaseConfig = {
 }
 
 firebase.apps.length === 0 && firebase.initializeApp(firebaseConfig)
-
+const db = firebase.firestore()
 export interface User {
-    avatar: string,
-    username: string,
+  avatar: string;
+  username: string;
+  email: string;
+  id: string;
 }
 
-const getUser = (user: firebase.User) : User => {
+const getUser = (user: firebase.User): User => {
   // console.log(user) // sirve para estudiar el objeto que devuelve firebase
 
   const username: string = user.displayName
   // eslint-disable-next-line camelcase
-  const avatar_url : string = user.providerData[0].photoURL
-
-  const result : User = { avatar: avatar_url, username: username }
+  const avatar: string = user.providerData[0].photoURL
+  const email: string = user.email
+  const id: string = user.uid
+  const result: User = { avatar, username, email, id }
   return result
 }
 
 export const onAuthStateChange = (onchange) => {
-  return firebase.auth().onAuthStateChanged(user => {
+  return firebase.auth().onAuthStateChanged((user) => {
     const updatedUserState = user ? getUser(user) : undefined
     onchange(updatedUserState)
   })
@@ -38,6 +41,55 @@ export const onAuthStateChange = (onchange) => {
 
 export const loginWithGitHub = () => {
   const githubProvider = new firebase.auth.GithubAuthProvider()
-  return firebase.auth()
-    .signInWithPopup(githubProvider)
+  return firebase.auth().signInWithPopup(githubProvider)
+}
+
+interface sendTwitProps {
+  user: User;
+  textAreaValue: string;
+}
+
+export const sendTwit = ({
+  user,
+  textAreaValue
+}: sendTwitProps): Promise<
+  firebase.firestore.DocumentReference<firebase.firestore.DocumentData>
+> => {
+  const twitToStore = {
+    user: user,
+    content: textAreaValue,
+    createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+    likes: 0,
+    shared: 0
+  }
+  // console.log(twitToStore, 'en funcion en firebase client')
+  return db.collection('twits').add(twitToStore)
+}
+
+export interface TwitInfo {
+  twitID: string,
+  content: string,
+  user: User,
+  createdAt: Date,
+  likes: number,
+  shared: number,
+}
+
+export const getLatestTwits = () => {
+  return db
+    .collection('twits')
+    .get()
+    .then((snapshot) => {
+      const latestTwits : TwitInfo[] | void = snapshot.docs.map(e => {
+        const twitID : string = e.id
+        const content : string = e.data().content
+        const user: User = e.data().user
+        const createdAt: Date = new Date(e.data().createdAt.seconds * 1000)
+        const likes: number = e.data().likes
+        const shared : number = e.data().shared
+        const twit : TwitInfo = { twitID, content, user, createdAt, likes, shared }
+        return twit
+      })
+      return latestTwits
+    }).catch((err) => console.error(err))
 }

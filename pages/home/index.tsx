@@ -3,7 +3,7 @@ import { ReactElement, useState, useEffect } from 'react'
 import Link from 'next/link'
 import Twit from '../../components/Twit'
 import Avatar from '../../components/Avatar'
-import { User } from '../../firebase/client'
+import { getLatestTwits, TwitInfo, User } from '../../firebase/client'
 import HomeIcon from '../../icons/HomeIcon'
 import LupaIcon from '../../icons/LupaIcon'
 import LetterIcon from '../../icons/LetterIcon'
@@ -15,18 +15,15 @@ import useUser from '../../hooks/useUser'
 import { useRouter } from 'next/router'
 
 export default function Home (): ReactElement {
-  const [timeline, setTimeline] = useState([])
+  const [timeline, setTimeline] = useState<TwitInfo[] | void>([])
   const user: User | undefined | null = useUser()
   const router = useRouter()
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/timeline')
-      .then((res) => res.json())
-      .then((twits) => setTimeline(twits))
-      .catch((err) => console.error(err))
-
+    user && getLatestTwits().then(setTimeline)
+      .catch(err => console.error(err))
     return () => {}
-  }, [])
+  }, [user])
 
   useEffect(() => {
     user === undefined && router.replace('/')
@@ -53,9 +50,12 @@ export default function Home (): ReactElement {
         )}
         {user && (
           <section>
-            {timeline.map((twit) => (
-              <Twit key={twit.id} twit={twit} />
-            ))}
+            {Array.isArray(timeline)
+              ? timeline.map((twit) => (
+              <Twit key={twit.twitID} twit={twit} />
+              ))
+              : <p>timeline es void</p>}
+              {/* REVISAR SI ALGUNA VEZ EL TIMELINE ES VOID A VER QUE HACER */}
           </section>
         )}
 
