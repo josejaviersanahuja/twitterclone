@@ -10,15 +10,17 @@ interface BotonProps {
   botonBackGroundColor: string;
   botonColor?: string;
   className?: string;
+  disabled?: boolean;
 }
 
-export default function Boton ({ children, onClick, botonBackGroundColor, botonColor, className = '' }: BotonProps): ReactElement {
+export default function Boton ({ children, onClick, botonBackGroundColor, botonColor, className = '', disabled = false }: BotonProps): ReactElement {
   return (
     <>
       <button
         onClick={onClick}
         style={{ backgroundColor: botonBackGroundColor, color: botonColor }}
         className={className}
+        disabled={disabled}
       >{children}</button>
       <style jsx>{botonStyle}</style>
       <style jsx>{`
@@ -61,6 +63,9 @@ const botonStyle = css`
               transition: transform .25s;
               content: ''
           }
+      button[disabled] {
+        opacity:0.4;
+      }
       button:hover {
           cursor:pointer;
       }

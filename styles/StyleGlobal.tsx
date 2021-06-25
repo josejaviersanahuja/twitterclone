@@ -40,6 +40,7 @@ export default function StyleGlobal ({ fondoColor, letraColor, anchorColor }:Glo
           }
           
           main {
+            display: flex;
             flex-direction:column;
             background:${colors.primary};
             width:100vw;

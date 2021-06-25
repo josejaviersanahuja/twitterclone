@@ -19,7 +19,7 @@ export interface User {
 }
 
 const getUser = (user: firebase.User) : User => {
-  console.log(user)
+  // console.log(user) // sirve para estudiar el objeto que devuelve firebase
 
   const username: string = user.displayName
   // eslint-disable-next-line camelcase

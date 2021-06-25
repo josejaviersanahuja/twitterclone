@@ -1,21 +1,17 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { colors } from '../styles/StyleGlobal'
 import Avatar from '../components/Avatar'
-import { MouseEventHandler, useState, useEffect } from 'react'
+import { MouseEventHandler, useEffect } from 'react'
 import Image from 'next/image'
-import { loginWithGitHub, User, onAuthStateChange } from '../firebase/client'
+import { loginWithGitHub } from '../firebase/client'
 import LoginBotons from '../components/LoginBotons/LoginBotons'
 import css from 'styled-jsx/css'
 import { useRouter } from 'next/router'
+import useUser from '../hooks/useUser'
 
 export default function SignIn () {
-  const [user, setuser] = useState<User | null | undefined>(null)
   const router = useRouter()
-
-  useEffect(() => {
-    onAuthStateChange(setuser)
-  }, [])
-
+  const user = useUser()
   useEffect(() => {
     user && router.replace('/home')
   }, [user])

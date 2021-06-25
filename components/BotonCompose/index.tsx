@@ -3,6 +3,7 @@ import React, { ReactElement } from 'react'
 import css from 'styled-jsx/css'
 import FeatherIcon from '../../icons/FeatherIcon'
 import { colors } from '../../styles/StyleGlobal'
+import { lighten } from '../../styles/styleUtils'
 
 export default function index (): ReactElement {
   return <>
@@ -16,6 +17,9 @@ export default function index (): ReactElement {
       div {
         background: ${colors.third};
         }
+      div:hover {
+          background: ${lighten({ color: colors.third, porcentaje: 0.05 })}
+      }
       `}</style>
 </>
 }
