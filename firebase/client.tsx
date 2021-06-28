@@ -95,3 +95,9 @@ export const getLatestTwits = () => {
       return latestTwits
     }).catch((err) => console.error(err))
 }
+
+export const uploadImage = (file) => {
+  const ref = firebase.storage().ref(`images/${file.name}`)
+  const task = ref.put(file)
+  return task
+}
