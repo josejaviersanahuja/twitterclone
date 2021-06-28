@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 import React, { ReactElement } from 'react'
 import css from 'styled-jsx/css'
+import { colors } from '../styles/StyleGlobal'
 
 export default function HomeIcon (
   props: React.SVGProps<SVGSVGElement>
@@ -8,14 +9,23 @@ export default function HomeIcon (
   return (
     <>
       <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        width={24}
-        height={24}
-        {...props}
+      height={21}
+      viewBox="0 0 21 21"
+      width={21}
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g
+        fill="none"
+        fillRule="evenodd"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       >
-        <path d="M12 3.906l-.25.156-11.5 7 .5.876L12 5.093l11.25 6.843.5-.874L20 8.78V4h-2v3.563l-5.75-3.5zM12 6.5l-10 6V24h20V12.5zM9 13h6v9H9z" />
-      </svg>
+        <path d="M1.5 10.5l9-9 9 9" />
+        <path d="M3.5 8.5v8a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1v-8" />
+      </g>
+    </svg>
       <style jsx>{homeIconStyle}</style>
     </>
   )
@@ -24,5 +34,6 @@ export default function HomeIcon (
 const homeIconStyle = css`
   svg {
     margin: auto;
+    color: ${colors.third}
   }
 `

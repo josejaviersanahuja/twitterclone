@@ -1,20 +1,29 @@
 /* eslint-disable no-use-before-define */
 import React from 'react'
 import css from 'styled-jsx/css'
+import { colors } from '../styles/StyleGlobal'
 
 export default function LetterIcon (props: React.SVGProps<SVGSVGElement>) {
   return (
     <>
       <svg
-        xmlns="http://www.w3.org/2000/svg"
-        height={24}
-        viewBox="0 0 24 24"
-        width={24}
-        {...props}
+      height={21}
+      viewBox="0 0 21 21"
+      width={21}
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g
+        fill="none"
+        fillRule="evenodd"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       >
-        <path d="M0 0h24v24H0z" fill="none" />
-        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-      </svg>
+        <path d="M3.5 6.5v8a2 2 0 002 2h10a2 2 0 002-2v-8a2 2 0 00-2-2h-10a2 2 0 00-2 2z" />
+        <path d="M5.5 7.5l5 3 5-3" />
+      </g>
+    </svg>
       <style jsx>{letterIconStyle}</style>
     </>
   )
@@ -23,5 +32,6 @@ export default function LetterIcon (props: React.SVGProps<SVGSVGElement>) {
 const letterIconStyle = css`
   svg {
     margin: auto;
+    color: ${colors.third}
   }
 `

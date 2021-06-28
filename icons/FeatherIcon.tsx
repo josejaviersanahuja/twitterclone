@@ -5,15 +5,23 @@ import css from 'styled-jsx/css'
 export default function FeatherIcon (props: React.SVGProps<SVGSVGElement>) {
   return (<>
       <svg
-        xmlns="http://www.w3.org/2000/svg"
-        height={36}
-        viewBox="0 0 24 24"
-        width={36}
-        {...props}
+      height={36}
+      viewBox="0 0 21 21"
+      width={36}
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g
+        fill="none"
+        fillRule="evenodd"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       >
-        <path fill="none" d="M0 0h24v24H0z" />
-        <path d="M9 4v1.38c-.83-.33-1.72-.5-2.61-.5-1.79 0-3.58.68-4.95 2.05l3.33 3.33h1.11v1.11c.86.86 1.98 1.31 3.11 1.36V15H6v3c0 1.1.9 2 2 2h10c1.66 0 3-1.34 3-3V4H9zm-1.11 6.41V8.26H5.61L4.57 7.22a5.07 5.07 0 011.82-.34c1.34 0 2.59.52 3.54 1.46l1.41 1.41-.2.2a2.7 2.7 0 01-1.92.8c-.47 0-.93-.12-1.33-.34zM19 17c0 .55-.45 1-1 1s-1-.45-1-1v-2h-6v-2.59c.57-.23 1.1-.57 1.56-1.03l.2-.2L15.59 14H17v-1.41l-6-5.97V6h8v11z" />
-      </svg>
+        <path d="M10 4.5H5.5a2 2 0 00-2 2v9a2 2 0 002 2h10a2 2 0 002-2V11" />
+        <path d="M17.5 3.467a1.462 1.462 0 01-.017 2.05L10.5 12.5l-3 1 1-3 6.987-7.046a1.409 1.409 0 011.885-.104zM15.5 5.5l.953 1" />
+      </g>
+    </svg>
       <style jsx>{featherStyle}</style>
   </>)
 }
@@ -21,5 +29,6 @@ export default function FeatherIcon (props: React.SVGProps<SVGSVGElement>) {
 const featherStyle = css`
   svg {
     margin:auto;
+    color: white;
   }
 `

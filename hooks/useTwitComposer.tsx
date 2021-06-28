@@ -25,7 +25,7 @@ export default function useTwitComposer () {
   const handleChange: React.ChangeEventHandler = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ): void => {
-    if (e.target.value.length < 200) {
+    if (e.target.value.length <= 200) {
       setTextAreaValue(e.target.value)
     }
   }

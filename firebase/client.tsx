@@ -70,7 +70,7 @@ export interface TwitInfo {
   twitID: string,
   content: string,
   user: User,
-  createdAt: Date,
+  createdAt: number, // in miliseconds?
   likes: number,
   shared: number,
 }
@@ -78,13 +78,15 @@ export interface TwitInfo {
 export const getLatestTwits = () => {
   return db
     .collection('twits')
+    .orderBy('createdAt', 'desc')
+    .limit(20)
     .get()
     .then((snapshot) => {
       const latestTwits : TwitInfo[] | void = snapshot.docs.map(e => {
         const twitID : string = e.id
         const content : string = e.data().content
         const user: User = e.data().user
-        const createdAt: Date = new Date(e.data().createdAt.seconds * 1000)
+        const createdAt: number = +e.data().createdAt.toDate()
         const likes: number = e.data().likes
         const shared : number = e.data().shared
         const twit : TwitInfo = { twitID, content, user, createdAt, likes, shared }
