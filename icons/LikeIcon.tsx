@@ -31,6 +31,7 @@ export default function LikeIcon (props: React.SVGProps<SVGSVGElement>): ReactEl
 const lupaStyle = css`
 svg {
   margin: auto;
-  color: ${colors.third}
+  color: ${colors.third};
+  transform: translateY(5px);
 }
 `

@@ -5,6 +5,7 @@ import { TwitInfo } from '../../firebase/client'
 import useTimeAgo from '../../hooks/useTimeAgo'
 import LikeIcon from '../../icons/LikeIcon'
 import SharedIcon from '../../icons/SharedIcon'
+import { colors } from '../../styles/StyleGlobal'
 import Avatar from '../Avatar'
 
 interface TwitProps {
@@ -21,10 +22,16 @@ export default function Twit ({ twit }: TwitProps): ReactElement {
         <pre>
           <h5>{twit.user.username}. <time>{timeAgo}</time></h5>
           <p>{twit.content}</p>
+          {twit.imgURL && <img src={twit.imgURL} alt="img"></img>}
           <div className="likesANDshares"><small><LikeIcon/>: {twit.likes} <SharedIcon/>: {twit.shared}</small></div>{}
         </pre>
       </article>
       <style jsx>{twitStyle}</style>
+      <style jsx>{`
+        img {
+          border: 1px solid ${colors.third};
+        }
+        `}</style>
     </>
   )
 }
@@ -46,7 +53,10 @@ const twitStyle = css`
           padding-left:1rem;
       }
       img {
-          border-radius:50%;
+          max-width:100%;
+          padding:0.5rem;
+          margin-top:0.5rem;
+          border-radius:10px;
       }
       h5 {
         margin-bottom: .5rem;

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { sendTwit, User } from '../firebase/client'
 import useUser from './useUser'
+import useDragDropImg from './useDragDropImg'
 
 const IDK = 'idk'
 const SENDING = 'sending'
@@ -15,10 +16,20 @@ const MESSAGEStatus = {
 }
 
 export default function useTwitComposer () {
+  // imgDrop Hook
+  const {
+    imgURL,
+    handleDragEnter,
+    handleDragLeave,
+    handleOnDrop,
+    styleOnDrag,
+    setimgURL
+  } = useDragDropImg()
+  // the rest of the Hook
   const [textAreaValue, setTextAreaValue] = useState('')
   const [messageStatus, setmessageStatus] = useState(MESSAGEStatus[IDK])
   const router = useRouter()
-  const user : User | null | undefined = useUser()
+  const user: User | null | undefined = useUser()
   const isBotonDisable: boolean =
     textAreaValue === '' || messageStatus === MESSAGEStatus[SENDING]
 
@@ -36,8 +47,9 @@ export default function useTwitComposer () {
     e.preventDefault()
     setmessageStatus(MESSAGEStatus[SENDING])
     console.log(user.username, textAreaValue)
-    sendTwit({ user, textAreaValue })
-      .then((algo) => { // algo es un objeto chungo de firebase
+    sendTwit({ user, textAreaValue, imgURL })
+      .then((algo) => {
+        // algo es un objeto chungo de firebase
         // console.log(algo, 'en handleSubmit') // puedes estudiarlo aquí
         setmessageStatus(MESSAGEStatus[SENT])
         setTextAreaValue('')
@@ -49,5 +61,18 @@ export default function useTwitComposer () {
         alert('there was an error, try again')
       })
   }
-  return { textAreaValue, handleChange, handleSubmit, isBotonDisable, user, router }
+  return {
+    textAreaValue,
+    handleChange,
+    handleSubmit,
+    isBotonDisable,
+    user,
+    router,
+    imgURL,
+    handleDragEnter,
+    handleDragLeave,
+    handleOnDrop,
+    styleOnDrag,
+    setimgURL
+  }
 }

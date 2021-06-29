@@ -47,11 +47,13 @@ export const loginWithGitHub = () => {
 interface sendTwitProps {
   user: User;
   textAreaValue: string;
+  imgURL?: string | null;
 }
 
 export const sendTwit = ({
   user,
-  textAreaValue
+  textAreaValue,
+  imgURL
 }: sendTwitProps): Promise<
   firebase.firestore.DocumentReference<firebase.firestore.DocumentData>
 > => {
@@ -60,7 +62,8 @@ export const sendTwit = ({
     content: textAreaValue,
     createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
     likes: 0,
-    shared: 0
+    shared: 0,
+    imgURL: imgURL
   }
   // console.log(twitToStore, 'en funcion en firebase client')
   return db.collection('twits').add(twitToStore)
@@ -73,6 +76,7 @@ export interface TwitInfo {
   createdAt: number, // in miliseconds?
   likes: number,
   shared: number,
+  imgURL: string | null
 }
 
 export const getLatestTwits = () => {
@@ -89,15 +93,16 @@ export const getLatestTwits = () => {
         const createdAt: number = +e.data().createdAt.toDate()
         const likes: number = e.data().likes
         const shared : number = e.data().shared
-        const twit : TwitInfo = { twitID, content, user, createdAt, likes, shared }
+        const imgURL : string | null = e.data().imgURL
+        const twit : TwitInfo = { twitID, content, user, createdAt, likes, shared, imgURL }
         return twit
       })
       return latestTwits
     }).catch((err) => console.error(err))
 }
 
-export const uploadImage = (file) => {
+export const uploadImage = (file : File) => {
   const ref = firebase.storage().ref(`images/${file.name}`)
-  const task = ref.put(file)
+  const task : firebase.storage.UploadTask = ref.put(file)
   return task
 }

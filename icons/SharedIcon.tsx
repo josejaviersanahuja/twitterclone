@@ -31,5 +31,6 @@ const lupaStyle = css`
     svg {
       margin: auto;
       color: ${colors.third};
+      transform: translateY(5px);
     }
     `
