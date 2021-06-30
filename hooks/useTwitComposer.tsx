@@ -23,7 +23,9 @@ export default function useTwitComposer () {
     handleDragLeave,
     handleOnDrop,
     styleOnDrag,
-    setimgURL
+    handleInputFileChange,
+    handleResetImgUpload,
+    handleInputClick
   } = useDragDropImg()
   // the rest of the Hook
   const [textAreaValue, setTextAreaValue] = useState('')
@@ -73,6 +75,8 @@ export default function useTwitComposer () {
     handleDragLeave,
     handleOnDrop,
     styleOnDrag,
-    setimgURL
+    handleInputFileChange,
+    handleResetImgUpload,
+    handleInputClick
   }
 }

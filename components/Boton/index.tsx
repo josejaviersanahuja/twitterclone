@@ -11,14 +11,15 @@ interface BotonProps {
   botonColor?: string;
   className?: string;
   disabled?: boolean;
+  style?: React.CSSProperties
 }
 
-export default function Boton ({ children, onClick, botonBackGroundColor, botonColor, className = '', disabled = false }: BotonProps): ReactElement {
+export default function Boton ({ children, onClick, botonBackGroundColor, botonColor, className = '', disabled = false, style }: BotonProps): ReactElement {
   return (
     <>
       <button
         onClick={onClick}
-        style={{ backgroundColor: botonBackGroundColor, color: botonColor }}
+        style={{ ...style, backgroundColor: botonBackGroundColor, color: botonColor }}
         className={className}
         disabled={disabled}
       >{children}</button>

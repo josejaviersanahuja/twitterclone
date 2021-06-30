@@ -102,7 +102,7 @@ export const getLatestTwits = () => {
 }
 
 export const uploadImage = (file : File) => {
-  const ref = firebase.storage().ref(`images/${file.name}`)
+  const ref = file ? firebase.storage().ref(`images/${file.name}`) : null
   const task : firebase.storage.UploadTask = ref.put(file)
   return task
 }

@@ -6,6 +6,7 @@ import Avatar from '../../../components/Avatar'
 import { colors } from '../../../styles/StyleGlobal'
 import Spinner from '../../../components/Spinner'
 import useTwitComposer from '../../../hooks/useTwitComposer'
+import PictureIcon from '../../../icons/PictureIcon'
 
 // eslint-disable-next-line no-empty-pattern
 export default function index (): ReactElement {
@@ -21,7 +22,9 @@ export default function index (): ReactElement {
     handleDragLeave,
     handleOnDrop,
     styleOnDrag,
-    setimgURL
+    handleInputFileChange,
+    handleResetImgUpload,
+    handleInputClick
   } = useTwitComposer()
 
   useEffect(() => {
@@ -54,17 +57,30 @@ export default function index (): ReactElement {
             {imgURL && (
               <div className="imgUpload__wrapper">
                 <img src={imgURL} alt={imgURL} />
-                <button onClick={() => setimgURL(null)}>X</button>
+                <button onClick={handleResetImgUpload}>X</button>
               </div>
             )}
+            <input
+              type="file"
+              id="imgTwit"
+              name="imgTwit"
+              accept="image/png, image/jpeg"
+              multiple={false}
+              onChange={handleInputFileChange}
+              style={{ display: 'none' }}
+              onClick={handleInputClick}
+            />
+            <label htmlFor="imgTwit"><PictureIcon/></label>
             <Boton
               onClick={() => {}}
               botonBackGroundColor={colors.third}
               botonColor="#ffffff"
               disabled={isBotonDisable}
+              style={{ position: 'absolute', top: '7px', right: '16px', zIndex: 1 }}
             >
               <>Twittear</>
             </Boton>
+
             <small>{200 - textAreaValue.length}</small>
           </form>
         </section>
@@ -160,4 +176,10 @@ const composeStyle = css`
   .imgUpload__wrapper button:hover{
     background:black;
     }
+ main {
+   position:relative;
+ }
+ small {
+   float:right;
+ }
 `
