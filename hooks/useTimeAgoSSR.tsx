@@ -2,16 +2,18 @@
 import { useState, useEffect } from 'react'
 import { TwitInfo } from '../firebase/client'
 
-function formatingDate ({ twitDate, settimeAgo }) {
+function formatingDate ({ twitDate, settimeAgoSSR }) {
   const inSeconds = diffDate(twitDate) // in seconds
-  const timeAgoFormatter = navigator
+  /* const timeAgoFormatter = navigator
     ? new Intl.RelativeTimeFormat(navigator.language, {
       style: 'short'
     })
     : new Intl.RelativeTimeFormat('es-ES', {
       style: 'short'
-    })
-
+    }) */
+  const timeAgoFormatter = new Intl.RelativeTimeFormat('es-ES', {
+    style: 'short'
+  })
   const inMinutes = inSeconds / 60
   const inHours = inMinutes / 60
   const inDays = inHours / 24
@@ -20,28 +22,28 @@ function formatingDate ({ twitDate, settimeAgo }) {
       -Math.floor(inSeconds),
       'seconds'
     )
-    settimeAgo(conditionalResult)
+    settimeAgoSSR(conditionalResult)
   }
   if (inMinutes >= 1 && inMinutes < 60) {
     const conditionalResult = timeAgoFormatter.format(
       -Math.floor(inMinutes),
       'minutes'
     )
-    settimeAgo(conditionalResult)
+    settimeAgoSSR(conditionalResult)
   }
   if (inHours >= 1 && inHours < 24) {
     const conditionalResult = timeAgoFormatter.format(
       -Math.floor(inHours),
       'hours'
     )
-    settimeAgo(conditionalResult)
+    settimeAgoSSR(conditionalResult)
   }
   if (inDays >= 1 && inDays < 31) {
     const conditionalResult = timeAgoFormatter.format(
       -Math.floor(inDays),
       'days'
     )
-    settimeAgo(conditionalResult)
+    settimeAgoSSR(conditionalResult)
   }
 }
 
@@ -49,34 +51,36 @@ interface useTimeAgoProps {
   twit: TwitInfo;
 }
 
-export default function useTimeAgo ({ twit }: useTimeAgoProps) {
-  const [timeAgo, settimeAgo] = useState(twit.createdAt.toString())
-  const norMalTime = navigator
+export default function useTimeAgoSSR ({ twit }: useTimeAgoProps) {
+  const [timeAgoSSR, settimeAgoSSR] = useState(twit.createdAt.toString())
+  /* const norMalTimeSSR = navigator
     ? new Date(twit.createdAt).toLocaleDateString(navigator.language, {
       dateStyle: 'full'
     })
     : new Date(twit.createdAt).toLocaleDateString('es-ES', {
       dateStyle: 'full'
-    })
-
+    }) */
+  const norMalTimeSSR = new Date(twit.createdAt).toLocaleDateString('es-ES', {
+    dateStyle: 'full'
+  })
   const twitDate = twit.createdAt
 
   useEffect(() => {
-    formatingDate({ twitDate, settimeAgo })
+    formatingDate({ twitDate, settimeAgoSSR })
   }, [])
 
   useEffect(() => {
     const cada10seg = setInterval(() => {
       if (diffDate(twitDate) < 90) {
-        formatingDate({ twitDate, settimeAgo })
+        formatingDate({ twitDate, settimeAgoSSR })
       }
     }, 1000)
     return () => {
       clearInterval(cada10seg)
     }
-  }, [timeAgo])
+  }, [timeAgoSSR])
 
-  return { timeAgo, norMalTime }
+  return { timeAgoSSR, norMalTimeSSR }
 }
 
 function diffDate (twitDate) {

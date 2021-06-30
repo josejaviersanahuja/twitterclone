@@ -3,19 +3,18 @@ import React, { MouseEventHandler, ReactElement } from 'react'
 import css from 'styled-jsx/css'
 import Link from 'next/link'
 import { TwitInfo } from '../../firebase/client'
-import useTimeAgo from '../../hooks/useTimeAgo'
 import LikeIcon from '../../icons/LikeIcon'
 import SharedIcon from '../../icons/SharedIcon'
 import { colors } from '../../styles/StyleGlobal'
 import Avatar from '../Avatar'
 import { useRouter } from 'next/router'
-
+import useTimeAgoSSR from '../../hooks/useTimeAgoSSR'
 interface TwitProps {
   twit: TwitInfo;
 }
 
 export default function Twit ({ twit }: TwitProps): ReactElement {
-  const { timeAgo, norMalTime } = useTimeAgo({ twit })
+  const { timeAgoSSR, norMalTimeSSR } = useTimeAgoSSR({ twit })
   const router = useRouter()
 
   const handleClick :MouseEventHandler = () => {
@@ -30,7 +29,7 @@ export default function Twit ({ twit }: TwitProps): ReactElement {
           <h5>
             {twit.user.username}.
             <Link href="/status/[id]" as={`/status/${twit.twitID}`}><a>
-              <time title={norMalTime}>{timeAgo}</time>
+              <time title={norMalTimeSSR}>{timeAgoSSR}</time>
             </a></Link>
           </h5>
           <p>{twit.content}</p>
