@@ -1,6 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { ReactElement, useState, useEffect } from 'react'
-import Link from 'next/link'
 import Twit from '../../components/Twit'
 import Avatar from '../../components/Avatar'
 import { getLatestTwits, TwitInfo, User } from '../../firebase/client'
@@ -59,11 +58,7 @@ export default function Home (): ReactElement {
           </section>
         )}
 
-        <Link href="/compose/twit">
-          <a>
-            <BotonCompose />
-          </a>
-        </Link>
+        <BotonCompose />
         <footer>
           <HomeIcon />
           <LupaIcon />

@@ -13,14 +13,14 @@ interface TwitProps {
 }
 
 export default function Twit ({ twit }: TwitProps): ReactElement {
-  const timeAgo = useTimeAgo({ twit })
+  const { timeAgo, norMalTime } = useTimeAgo({ twit })
 
   return (
     <>
       <article>
         <Avatar user={twit.user}/>
         <pre>
-          <h5>{twit.user.username}. <time>{timeAgo}</time></h5>
+          <h5>{twit.user.username}. <time title={norMalTime}>{timeAgo}</time></h5>
           <p>{twit.content}</p>
           {twit.imgURL && <img src={twit.imgURL} alt="img"></img>}
           <div className="likesANDshares"><small><LikeIcon/>: {twit.likes} <SharedIcon/>: {twit.shared}</small></div>{}

@@ -32,6 +32,7 @@ interface useTimeAgoProps {
 
 export default function useTimeAgo ({ twit }: useTimeAgoProps) {
   const [timeAgo, settimeAgo] = useState(twit.createdAt.toString())
+  const norMalTime = new Date(twit.createdAt).toLocaleDateString(navigator.language, { dateStyle: 'full' })
   const twitDate = twit.createdAt
 
   useEffect(() => {
@@ -49,7 +50,7 @@ export default function useTimeAgo ({ twit }: useTimeAgoProps) {
     }
   }, [timeAgo])
 
-  return timeAgo
+  return { timeAgo, norMalTime }
 }
 
 function diffDate (twitDate) {
