@@ -2,7 +2,7 @@
 import { ReactElement, useState, useEffect } from 'react'
 import Twit from '../../components/Twit'
 import Avatar from '../../components/Avatar'
-import { getLatestTwits, TwitInfo, User } from '../../firebase/client'
+import { listenLatestTwits, TwitInfo, User } from '../../firebase/client'
 import HomeIcon from '../../icons/HomeIcon'
 import LupaIcon from '../../icons/LupaIcon'
 import LetterIcon from '../../icons/LetterIcon'
@@ -19,9 +19,14 @@ export default function Home (): ReactElement {
   const router = useRouter()
 
   useEffect(() => {
-    user && getLatestTwits().then(setTimeline)
-      .catch(err => console.error(err))
-    return () => {}
+    let unsuscribe
+    if (user) {
+      unsuscribe = listenLatestTwits(setTimeline)
+      console.log('escuchamos firestore')
+    }
+    return () => {
+      unsuscribe && unsuscribe() && console.log('dejamos de escuchar firestore')
+    }
   }, [user])
 
   useEffect(() => {

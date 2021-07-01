@@ -48,7 +48,7 @@ export default function useTwitComposer () {
   ): void => {
     e.preventDefault()
     setmessageStatus(MESSAGEStatus[SENDING])
-    console.log(user.username, textAreaValue)
+    // console.log(user.username, textAreaValue)
     sendTwit({ user, textAreaValue, imgURL })
       .then((algo) => {
         // algo es un objeto chungo de firebase

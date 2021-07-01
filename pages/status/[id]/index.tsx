@@ -8,6 +8,8 @@ import BellIcon from '../../../icons/BellIcon'
 import TwitSSR from '../../../components/TwitSSR'
 import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import { TwitInfo, User } from '../../../firebase/client'
+import BotonToGoBack from '../../../components/BotonToGoBack'
+import { firesAdmin } from '../../../firebase/admin'
 
 interface StatusTwitProps {
     twit : TwitInfo
@@ -18,7 +20,7 @@ export default function StatusTwit ({ twit } : StatusTwitProps): ReactElement {
     <>
       <main>
         <header>
-          <span>←</span>
+          <BotonToGoBack/>
           <strong>Twit</strong>
         </header>
 
@@ -59,9 +61,13 @@ export const getServerSideProps : GetServerSideProps<{[key: string]: any}> = asy
   const { params, res } = context
   const { id } = params
 
-  const apiResponse = await fetch(`http://localhost:3000/api/twit/${id}`)
-  if (apiResponse.ok) {
-    storedData = await apiResponse.json()
+  const apiResponse = await firesAdmin.collection('twits').doc(id).get().then(doc => {
+    const data = doc.data()
+    return data
+  })
+  // await fetch(`http://localhost:3000/api/twit/${id}`)
+  if (apiResponse) {
+    storedData = apiResponse// await JSON.parse(apiResponse)
     const twitID : string = Array.isArray(id) ? id[0] : id
     const content : string = storedData.content
     const user: User = storedData.user
@@ -111,9 +117,6 @@ const statusTwitStyle = css`
     font-size: 1.3rem;
   }
 
-  span {
-    font-size: 2rem;
-  }
 `
 
 /* ----------------------------------

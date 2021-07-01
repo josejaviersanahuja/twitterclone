@@ -79,26 +79,32 @@ export interface TwitInfo {
   imgURL: string | null
 }
 
-export const getLatestTwits = () => {
+const extractTwitsFromFirebase = (
+  snapshot : firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
+) : TwitInfo[] | void => {
+  const latestTwits : TwitInfo[] | void = snapshot.docs.map(e => {
+    const twitID : string = e.id
+    const content : string = e.data().content
+    const user: User = e.data().user
+    const createdAt: number = +e.data().createdAt.toDate()
+    const likes: number = e.data().likes
+    const shared : number = e.data().shared
+    const imgURL : string | null = e.data().imgURL
+    const twit : TwitInfo = { twitID, content, user, createdAt, likes, shared, imgURL }
+    return twit
+  })
+  return latestTwits
+}
+
+export const listenLatestTwits = (callback) => {
   return db
     .collection('twits')
     .orderBy('createdAt', 'desc')
     .limit(20)
-    .get()
-    .then((snapshot) => {
-      const latestTwits : TwitInfo[] | void = snapshot.docs.map(e => {
-        const twitID : string = e.id
-        const content : string = e.data().content
-        const user: User = e.data().user
-        const createdAt: number = +e.data().createdAt.toDate()
-        const likes: number = e.data().likes
-        const shared : number = e.data().shared
-        const imgURL : string | null = e.data().imgURL
-        const twit : TwitInfo = { twitID, content, user, createdAt, likes, shared, imgURL }
-        return twit
-      })
-      return latestTwits
-    }).catch((err) => console.error(err))
+    .onSnapshot((snapshot) => {
+      const latestTwits: TwitInfo[] | void = extractTwitsFromFirebase(snapshot)
+      callback(latestTwits)
+    })
 }
 
 export const uploadImage = (file : File) => {

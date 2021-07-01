@@ -7,6 +7,7 @@ import { colors } from '../../../styles/StyleGlobal'
 import Spinner from '../../../components/Spinner'
 import useTwitComposer from '../../../hooks/useTwitComposer'
 import PictureIcon from '../../../icons/PictureIcon'
+import BotonToGoBack from '../../../components/BotonToGoBack'
 
 // eslint-disable-next-line no-empty-pattern
 export default function index (): ReactElement {
@@ -35,7 +36,7 @@ export default function index (): ReactElement {
     <>
       <main>
         <header>
-          <span>←</span>
+          <BotonToGoBack/>
           <div className="botonTwittear">{/* aqui iba el boton */}</div>
         </header>
         <section>
@@ -116,10 +117,7 @@ const composeStyle = css`
   .botonTwittear {
     margin-left: auto;
   }
-  span {
-    font-size: 2rem;
-  }
-
+  
   form {
     width: 90%;
   }

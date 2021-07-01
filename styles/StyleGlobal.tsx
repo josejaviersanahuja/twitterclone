@@ -36,7 +36,7 @@ export default function StyleGlobal ({ fondoColor, letraColor, anchorColor }:Glo
               font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
           }
           span {
-              color:${colors.third}
+              color:${colors.third};
           }
           
           main {
