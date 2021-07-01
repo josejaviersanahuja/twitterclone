@@ -12,7 +12,6 @@
 /.next
 .env
 .env.local
-/firebase/serviceAccountKey.json
 
 # misc
 .DS_Store

@@ -12,6 +12,8 @@ import Spinner from '../../components/Spinner'
 import css from 'styled-jsx/css'
 import useUser from '../../hooks/useUser'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
+import { colors } from '../../styles/StyleGlobal'
 
 export default function Home (): ReactElement {
   const [timeline, setTimeline] = useState<TwitInfo[] | void>([])
@@ -65,13 +67,18 @@ export default function Home (): ReactElement {
 
         <BotonCompose />
         <footer>
-          <HomeIcon />
-          <LupaIcon />
-          <BellIcon />
-          <LetterIcon />
+          <Link href="/"><a><HomeIcon /></a></Link>
+          <Link href="/"><a><LupaIcon /></a></Link>
+          <Link href="/"><a><BellIcon /></a></Link>
+          <Link href="/"><a><LetterIcon /></a></Link>
         </footer>
       </main>
       <style jsx>{homeStyle}</style>
+      <style jsx>{`
+        a:hover {
+          background: ${colors.primary};
+        }
+        `}</style>
     </>
   )
 }
@@ -112,5 +119,12 @@ const homeStyle = css`
 
   .avatar {
     width: 55px;
+  }
+  a {
+    margin:auto;
+    border-radius: 50%;
+    width:40px;
+    height:40px;
+    display:flex;
   }
 `

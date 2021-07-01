@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import React, { MouseEventHandler, ReactElement } from 'react'
+import React, { ReactElement } from 'react'
 import css from 'styled-jsx/css'
 import Link from 'next/link'
 import { TwitInfo } from '../../firebase/client'
@@ -7,7 +7,6 @@ import LikeIcon from '../../icons/LikeIcon'
 import SharedIcon from '../../icons/SharedIcon'
 import { colors } from '../../styles/StyleGlobal'
 import Avatar from '../Avatar'
-import { useRouter } from 'next/router'
 import useTimeAgoSSR from '../../hooks/useTimeAgoSSR'
 interface TwitProps {
   twit: TwitInfo;
@@ -15,17 +14,12 @@ interface TwitProps {
 
 export default function Twit ({ twit }: TwitProps): ReactElement {
   const { timeAgoSSR, norMalTimeSSR } = useTimeAgoSSR({ twit })
-  const router = useRouter()
-
-  const handleClick :MouseEventHandler = () => {
-    router.push('/status/[id]', `status/${twit.twitID}`)
-  }
 
   return (
     <>
       <article>
         <Avatar user={twit.user}/>
-        <pre onClick={handleClick}>
+        <pre>
           <h5>
             {twit.user.username}.
             <Link href="/status/[id]" as={`/status/${twit.twitID}`}><a>
@@ -65,10 +59,7 @@ const twitStyle = css`
           padding-left:1rem;
           border-radius:10px;
       }
-      pre:hover {
-        cursor:pointer;
-        background:white;
-      }
+      
       img {
           max-width:100%;
           padding:0.5rem;

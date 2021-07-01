@@ -66,7 +66,7 @@ export const sendTwit = ({
     imgURL: imgURL
   }
   // console.log(twitToStore, 'en funcion en firebase client')
-  return db.collection('twits').add(twitToStore)
+  return db.collection(process.env.NEXT_PUBLIC_twits_collection).add(twitToStore)
 }
 
 export interface TwitInfo {
@@ -98,7 +98,7 @@ const extractTwitsFromFirebase = (
 
 export const listenLatestTwits = (callback) => {
   return db
-    .collection('twits')
+    .collection(process.env.NEXT_PUBLIC_twits_collection)
     .orderBy('createdAt', 'desc')
     .limit(20)
     .onSnapshot((snapshot) => {

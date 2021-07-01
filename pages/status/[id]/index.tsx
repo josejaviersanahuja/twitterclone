@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import css from 'styled-jsx/css'
 import HomeIcon from '../../../icons/HomeIcon'
 import LupaIcon from '../../../icons/LupaIcon'
@@ -10,12 +10,22 @@ import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult
 import { TwitInfo, User } from '../../../firebase/client'
 import BotonToGoBack from '../../../components/BotonToGoBack'
 import { firesAdmin } from '../../../firebase/admin'
+import useUser from '../../../hooks/useUser'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import { colors } from '../../../styles/StyleGlobal'
 
 interface StatusTwitProps {
     twit : TwitInfo
 }
 
 export default function StatusTwit ({ twit } : StatusTwitProps): ReactElement {
+  const user = useUser()
+  const router = useRouter()
+  useEffect(() => {
+    user === undefined && router.replace('/')
+  }, [user])
+
   return (
     <>
       <main>
@@ -32,13 +42,18 @@ export default function StatusTwit ({ twit } : StatusTwitProps): ReactElement {
         </section>
 
         <footer>
-          <HomeIcon />
-          <LupaIcon />
-          <BellIcon />
-          <LetterIcon />
+          <Link href="/"><a><HomeIcon /></a></Link>
+          <Link href="/"><a><LupaIcon /></a></Link>
+          <Link href="/"><a><BellIcon /></a></Link>
+          <Link href="/"><a><LetterIcon /></a></Link>
         </footer>
       </main>
       <style jsx>{statusTwitStyle}</style>
+      <style jsx>{`
+        a:hover {
+          background: ${colors.primary};
+        }
+        `}</style>
     </>
   )
 }
@@ -61,7 +76,7 @@ export const getServerSideProps : GetServerSideProps<{[key: string]: any}> = asy
   const { params, res } = context
   const { id } = params
 
-  const apiResponse = await firesAdmin.collection('twits').doc(id).get().then(doc => {
+  const apiResponse = await firesAdmin.collection(process.env.NEXT_PUBLIC_twits_collection).doc(id).get().then(doc => {
     const data = doc.data()
     return data
   })
@@ -76,6 +91,7 @@ export const getServerSideProps : GetServerSideProps<{[key: string]: any}> = asy
     const shared : number = storedData.shared
     const imgURL : string | null = storedData.imgURL
     const twit : TwitInfo = { twitID, content, user, createdAt, likes, shared, imgURL }
+
     return { props: { twit } }
   }
   if (res) {
@@ -117,6 +133,13 @@ const statusTwitStyle = css`
     font-size: 1.3rem;
   }
 
+  a {
+    margin:auto;
+    border-radius: 50%;
+    width:40px;
+    height:40px;
+    display:flex;
+  }
 `
 
 /* ----------------------------------
