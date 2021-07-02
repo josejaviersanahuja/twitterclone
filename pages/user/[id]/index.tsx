@@ -1,12 +1,12 @@
 /* eslint-disable no-use-before-define */
-import { useRouter } from 'next/router'
-import React, { ReactElement, useState, useEffect } from 'react'
-import { TwitInfo, listenLatestTwits } from '../../../firebase/client'
-import useUser, { ValidUser } from '../../../hooks/useUser'
+// import { useRouter } from 'next/router'
+import React, { ReactElement } from 'react'
+// import { TwitInfo } from '../../../firebase/client'
+/* import useUser, { ValidUser } from '../../../hooks/useUser'
 import Spinner from '../../../components/Spinner'
 import Avatar from '../../../components/Avatar'
 import Twit from '../../../components/Twit'
-import BellIcon from '../../../icons/BellIcon'
+ */import BellIcon from '../../../icons/BellIcon'
 import LupaIcon from '../../../icons/LupaIcon'
 import HomeIcon from '../../../icons/HomeIcon'
 import BotonCompose from '../../../components/BotonCompose'
@@ -16,56 +16,37 @@ import { colors } from '../../../styles/StyleGlobal'
 import css from 'styled-jsx/css'
 
 export default function index (): ReactElement {
-  const [timeline, setTimeline] = useState<TwitInfo[] | void>([])
-  const { user, userFullData } : ValidUser | undefined | null = useUser()
-  const router = useRouter()
-
-  useEffect(() => {
-    let unsuscribe
-    if (user) {
-      // listen de solo los twits personales
-      unsuscribe = listenLatestTwits(setTimeline)
-      console.log('escuchamos firestore')
-    }
-    return () => {
-      unsuscribe && unsuscribe() && console.log('dejamos de escuchar firestore')
-    }
-  }, [user])
-
-  useEffect(() => {
-    user === undefined && router.replace('/')
-  }, [user])
+  // const [timeline, setTimeline] = useState<TwitInfo[] | void>([])
 
   return (
       <>
         <main>
           <header>
-            {user === undefined && <Spinner />}
+            {/* {user === undefined && <Spinner />}
             {user === null && <p>intento cargar</p>}
-            {user && <Avatar user={user} small={true} />}
-            <strong>Inicio</strong>
+            {user && <Avatar user={user} small={true} userPage/>} */}
+            <strong>Profile de...</strong>
           </header>
-          {user === undefined && (
+         {/* { user === undefined && (
             <section>
               <Spinner />
             </section>
-          )}
-          {user === null && (
+         )} */}
+          {/* {user === null && (
             <section>
               <p>intento cargar</p>
             </section>
-          )}
-          {user && (
+          )} */}
+          {/* {user && (
             <section>
               {Array.isArray(timeline)
                 ? timeline.map((twit) => (
                 <Twit key={twit.twitID} twit={twit} />
                 ))
                 : <p>timeline es void</p>}
-                {/* REVISAR SI ALGUNA VEZ EL TIMELINE ES VOID A VER QUE HACER */}
-            </section>
-          )}
 
+            </section>
+          )} */}
           <BotonCompose />
           <footer>
             <Link href="/"><a><HomeIcon /></a></Link>
