@@ -2,7 +2,7 @@
 import { ReactElement, useState, useEffect } from 'react'
 import Twit from '../../components/Twit'
 import Avatar from '../../components/Avatar'
-import { listenLatestTwits, TwitInfo, User } from '../../firebase/client'
+import { listenLatestTwits, TwitInfo } from '../../firebase/client'
 import HomeIcon from '../../icons/HomeIcon'
 import LupaIcon from '../../icons/LupaIcon'
 import LetterIcon from '../../icons/LetterIcon'
@@ -10,14 +10,14 @@ import BellIcon from '../../icons/BellIcon'
 import BotonCompose from '../../components/BotonCompose'
 import Spinner from '../../components/Spinner'
 import css from 'styled-jsx/css'
-import useUser from '../../hooks/useUser'
+import useUser, { ValidUser } from '../../hooks/useUser'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { colors } from '../../styles/StyleGlobal'
 
 export default function Home (): ReactElement {
   const [timeline, setTimeline] = useState<TwitInfo[] | void>([])
-  const user: User | undefined | null = useUser()
+  const { user }: ValidUser | undefined | null = useUser()
   const router = useRouter()
 
   useEffect(() => {
@@ -27,7 +27,10 @@ export default function Home (): ReactElement {
       console.log('escuchamos firestore')
     }
     return () => {
-      unsuscribe && unsuscribe() && console.log('dejamos de escuchar firestore')
+      if (unsuscribe) {
+        unsuscribe()
+        console.log('dejamos de escuchar firestore')
+      }
     }
   }, [user])
 

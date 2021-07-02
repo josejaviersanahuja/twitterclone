@@ -1,11 +1,11 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { ReactElement } from 'react'
-import { User } from '../../firebase/client'
+import { UserReducedInfo } from '../../firebase/client'
 import Image from 'next/image'
 import css from 'styled-jsx/css'
 
 interface ProfileProps {
-  user: User;
+  user: UserReducedInfo;
   displayName?: boolean;
   small?: boolean
 }

@@ -11,9 +11,11 @@ import useUser from '../hooks/useUser'
 
 export default function SignIn () {
   const router = useRouter()
-  const user = useUser()
+  const { user } = useUser()
   useEffect(() => {
-    user && router.replace('/home')
+    if (user) {
+      router.replace('/home')
+    }
   }, [user])
 
   const handleClick : MouseEventHandler = () :void => {

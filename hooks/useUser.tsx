@@ -1,12 +1,24 @@
 import { useState, useEffect } from 'react'
-import { User, onAuthStateChange } from '../firebase/client'
+import { amplifyUserInformation, onAuthStateChange, User, UserReducedInfo } from '../firebase/client'
 
-export default function useUser (): User | null | undefined {
-  const [user, setuser] = useState<User | null | undefined>(null)
+export interface ValidUser {
+  user: UserReducedInfo,
+  userFullData : User | null | undefined
+}
+
+export default function useUser (): ValidUser | null | undefined {
+  const [user, setuser] = useState<UserReducedInfo | null | undefined>(null)
+  const [userFullData, setuserFullData] = useState<User | null | undefined>(null)
+
+  const twoFunctionsInOne = (user : UserReducedInfo) => {
+    setuser(user)
+    amplifyUserInformation(user, setuserFullData)
+  }
 
   useEffect(() => {
-    onAuthStateChange(setuser)
+    onAuthStateChange(twoFunctionsInOne)
   }, [])
+  console.log(userFullData)
 
-  return user
+  return { user, userFullData }
 }
