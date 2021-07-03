@@ -159,7 +159,7 @@ export const sendTwit = ({
 export interface TwitInfo {
   twitID: string;
   content: string;
-  user: User;
+  user: UserReducedInfo;
   createdAt: number; // in miliseconds?
   likes: number;
   shared: number;

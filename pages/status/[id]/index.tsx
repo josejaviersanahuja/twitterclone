@@ -7,7 +7,7 @@ import LetterIcon from '../../../icons/LetterIcon'
 import BellIcon from '../../../icons/BellIcon'
 import TwitSSR from '../../../components/TwitSSR'
 import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
-import { TwitInfo, User } from '../../../firebase/client'
+import { TwitInfo, UserReducedInfo } from '../../../firebase/client'
 import BotonToGoBack from '../../../components/BotonToGoBack'
 import { firesAdmin } from '../../../firebase/admin'
 import useUser from '../../../hooks/useUser'
@@ -85,7 +85,7 @@ export const getServerSideProps : GetServerSideProps<{[key: string]: any}> = asy
     storedData = apiResponse// await JSON.parse(apiResponse)
     const twitID : string = Array.isArray(id) ? id[0] : id
     const content : string = storedData.content
-    const user: User = storedData.user
+    const user: UserReducedInfo = storedData.user
     const createdAt: number = storedData.createdAt._seconds * 1000
     const likes: number = storedData.likes
     const shared : number = storedData.shared
