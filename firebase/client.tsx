@@ -166,7 +166,7 @@ export interface TwitInfo {
   imgURL: string | null;
 }
 
-const extractTwitsFromFirebase = (
+export const extractTwitsFromFirebase = (
   snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
 ): TwitInfo[] | void => {
   const latestTwits: TwitInfo[] | void = snapshot.docs.map((e) => {
