@@ -100,6 +100,39 @@ export const amplifyUserInformation = (user: UserReducedInfo | undefined, callba
   }
 }
 
+export const extractUsersFromFirebase = (
+  snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
+): User[] | void => {
+  const allUsers: User[] | void = snapshot.docs.map((e) => {
+    const avatar: string = e.data().avatar
+    const username: string = e.data().username
+    const email: string = e.data().email
+    const id: string = e.data().id
+    const following: [] = e.data().following
+    const followers: [] = e.data().followers
+    const user: User = {
+      avatar,
+      username,
+      email,
+      id,
+      following,
+      followers
+    }
+    return user
+  })
+  return allUsers
+}
+
+export const getAllUsers = (callback) => {
+  return db
+    .collection(process.env.NEXT_PUBLIC_users_collection)
+    .get()
+    .then((snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>) => {
+      const allUsers: User[] | void = extractUsersFromFirebase(snapshot)
+      callback(allUsers)
+    })
+}
+
 const getUser = (user: firebase.User): UserReducedInfo => {
   // console.log(user) // sirve para estudiar el objeto que devuelve firebase
 
@@ -212,6 +245,18 @@ export const getUserLatestTwits = (userReducedInfo, callback) : Promise<void> =>
     .where('userRef', '==', userReducedInfo.email)
     .orderBy('createdAt', 'desc')
     .limit(20)
+    .get()
+    .then((snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>) => {
+      const latestTwits: TwitInfo[] | void = extractTwitsFromFirebase(snapshot)
+      callback(latestTwits)
+    })
+}
+
+export const getGlobalLatestTwits = (callback) : Promise<void> => {
+  return db
+    .collection(process.env.NEXT_PUBLIC_twits_collection)
+    .orderBy('createdAt', 'desc')
+    .limit(50)
     .get()
     .then((snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>) => {
       const latestTwits: TwitInfo[] | void = extractTwitsFromFirebase(snapshot)

@@ -8,6 +8,7 @@ import Spinner from '../../../components/Spinner'
 import useTwitComposer from '../../../hooks/useTwitComposer'
 import PictureIcon from '../../../icons/PictureIcon'
 import BotonToGoBack from '../../../components/BotonToGoBack'
+import Footer from '../../../components/Footer'
 
 // eslint-disable-next-line no-empty-pattern
 export default function index (): ReactElement {
@@ -85,6 +86,7 @@ export default function index (): ReactElement {
             <small>{200 - textAreaValue.length}</small>
           </form>
         </section>
+        <Footer/>
       </main>
       <style jsx>{composeStyle}</style>
       <style jsx>{`

@@ -2,79 +2,59 @@
 import { ReactElement, useState, useEffect } from 'react'
 import Twit from '../../components/Twit'
 import Avatar from '../../components/Avatar'
-import { listenLatestTwits, TwitInfo } from '../../firebase/client'
+import { getGlobalLatestTwits, TwitInfo } from '../../firebase/client'
 import BotonCompose from '../../components/BotonCompose'
 import Spinner from '../../components/Spinner'
 import css from 'styled-jsx/css'
 import useUser, { ValidUser } from '../../hooks/useUser'
-import { useRouter } from 'next/router'
 import Footer from '../../components/Footer'
+import { colors } from '../../styles/StyleGlobal'
 
 export default function Home (): ReactElement {
   const [timeline, setTimeline] = useState<TwitInfo[] | void>([])
   const { user }: ValidUser | undefined | null = useUser()
-  const router = useRouter()
-
+  /* const router = useRouter()
+ */
   useEffect(() => {
-    let unsuscribe
-    if (user) {
-      unsuscribe = listenLatestTwits(setTimeline)
-      console.log('escuchamos firestore')
-    }
-    return () => {
-      if (unsuscribe) {
-        unsuscribe()
-        console.log('dejamos de escuchar firestore')
-      }
-    }
-  }, [user])
-
-  useEffect(() => {
-    user === undefined && router.replace('/')
-  }, [user])
+    getGlobalLatestTwits(setTimeline)
+  }, [])
 
   return (
     <>
       <main>
         <header>
           {user === undefined && <Spinner />}
-          {user === null && <p>intento cargar</p>}
+          {user === null && <p>Invitado detectado</p>}
           {user && <Avatar user={user} small={true} />}
-          <strong>Inicio</strong>
+          <strong>Twits Globales</strong>
 
         </header>
-        {user === undefined && (
-          <section>
-            <Spinner />
-          </section>
-        )}
-        {user === null && (
-          <section>
-            <p>intento cargar</p>
-          </section>
-        )}
-        {user && (
-          <section>
-            {Array.isArray(timeline)
+        {Array.isArray(timeline)
+          ? <section>
+            { timeline.length > 0
               ? timeline.map((twit) => (
               <Twit key={twit.twitID} twit={twit} />
               ))
-              : <p>timeline es void</p>}
+              : <p>El global timeline esta vacío</p>}
               {/* REVISAR SI ALGUNA VEZ EL TIMELINE ES VOID A VER QUE HACER */}
           </section>
-        )}
+          : <section><p>timeline es void</p></section>}
 
-        <BotonCompose />
+        {user && <BotonCompose />}
         <Footer/>
       </main>
       <style jsx>{homeStyle}</style>
+      <style jsx>{`
+        a:hover {
+          background: ${colors.primary};
+        }
+        `}</style>
     </>
   )
 }
 
 const homeStyle = css`
-  header
-  {
+  header {
     display: flex;
     align-items: center;
     position: fixed;

@@ -5,24 +5,20 @@ import React, { ReactElement, useState, useEffect } from 'react'
 import Spinner from '../../../components/Spinner'
 import Avatar from '../../../components/Avatar'
 import Twit from '../../../components/Twit'
-import BellIcon from '../../../icons/BellIcon'
-import LupaIcon from '../../../icons/LupaIcon'
-import HomeIcon from '../../../icons/HomeIcon'
 import BotonCompose from '../../../components/BotonCompose'
-import LetterIcon from '../../../icons/LetterIcon'
-import Link from 'next/link'
-import { colors } from '../../../styles/StyleGlobal'
 import css from 'styled-jsx/css'
 import { getUserLatestTwits, reduceUserInformation, TwitInfo, User } from '../../../firebase/client'
 import { firesAdmin } from '../../../firebase/admin'
 import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
+import Footer from '../../../components/Footer'
+import useUser from '../../../hooks/useUser'
 
-export default function index ({ user } : {user: User}): ReactElement {
+export default function index ({ userSSR } : {userSSR: User}): ReactElement {
   const [timeline, setTimeline] = useState<TwitInfo[] | void>([])
-  const userReducedInfo = reduceUserInformation(user)
-
+  const userReducedInfo = reduceUserInformation(userSSR)
+  const { user } = useUser()
   useEffect(() => {
-    user && getUserLatestTwits(userReducedInfo, setTimeline)
+    userSSR && getUserLatestTwits(userReducedInfo, setTimeline)
   }, [])
 
   return (
@@ -31,28 +27,28 @@ export default function index ({ user } : {user: User}): ReactElement {
         <header>
           {user === undefined && <Spinner />}
           {user === null && <p>intento cargar</p>}
-          {user && <Avatar user={userReducedInfo} small={true} />}
-          <strong>Perfil de {user.username}</strong>
+          {user && <Avatar user={user} small={true} />}
+          <strong>Perfil de {userSSR.username}</strong>
         </header>
-        {user && (<div>
+        {userSSR && (<div>
           <Avatar
             user={userReducedInfo}
             userPage
             displayName
-            userFullData={user}
+            userFullData={userSSR}
           />
         </div>)}
-        {user === undefined && (
+        {userSSR === undefined && (
           <section>
             <Spinner />
           </section>
         )}
-        {user === null && (
+        {userSSR === null && (
           <section>
             <p>intento cargar</p>
           </section>
         )}
-        {user && (
+        {userSSR && (
           <section>
             {Array.isArray(timeline)
               ? timeline.map((twit) => (
@@ -62,26 +58,17 @@ export default function index ({ user } : {user: User}): ReactElement {
 
           </section>
         )}
-        <BotonCompose />
-        <footer>
-          <Link href="/"><a><HomeIcon /></a></Link>
-          <Link href="/"><a><LupaIcon /></a></Link>
-          <Link href="/"><a><BellIcon /></a></Link>
-          <Link href="/"><a><LetterIcon /></a></Link>
-        </footer>
+        {user && <BotonCompose />}
+        <Footer/>
       </main>
       <style jsx>{homeStyle}</style>
-      <style jsx>{`
-          a:hover {
-            background: ${colors.primary};
-          }
-          `}</style>
+
     </>
   )
 }
 
 export const getServerSideProps: GetServerSideProps<{ [key: string]: any }> = async (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<{ [key: string]: any }>> => {
-  let user: User = {
+  let userSSR: User = {
     avatar: '',
     username: '',
     email: '',
@@ -109,9 +96,9 @@ export const getServerSideProps: GetServerSideProps<{ [key: string]: any }> = as
     }) */
 
   if (apiUserResponse) { // && apiTimelineResponse) {
-    user = apiUserResponse
+    userSSR = apiUserResponse
     // console.log('getServersideProps ok user = ', user)
-    return { props: { user } }
+    return { props: { userSSR } }
   }
   if (res) {
     res.writeHead(301, { Location: '/home' }).end()
@@ -119,8 +106,7 @@ export const getServerSideProps: GetServerSideProps<{ [key: string]: any }> = as
 }
 
 const homeStyle = css`
-    header,
-    footer {
+    header {
       display: flex;
       align-items: center;
       position: fixed;
@@ -129,12 +115,6 @@ const homeStyle = css`
       max-width: 500px;
       background-color: white;
       z-index: 1;
-    }
-  
-    footer {
-      bottom: 0;
-      border-top: 1px solid lightblue;
-      display: flex;
     }
   
     header {
@@ -155,13 +135,7 @@ const homeStyle = css`
     .avatar {
       width: 55px;
     }
-    a {
-      margin:auto;
-      border-radius: 50%;
-      width:40px;
-      height:40px;
-      display:flex;
-    }
+  
     div {
       margin-top:3rem;
     }

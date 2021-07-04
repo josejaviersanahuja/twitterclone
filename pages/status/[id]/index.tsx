@@ -1,10 +1,6 @@
 /* eslint-disable no-use-before-define */
 import React, { ReactElement, useEffect } from 'react'
 import css from 'styled-jsx/css'
-import HomeIcon from '../../../icons/HomeIcon'
-import LupaIcon from '../../../icons/LupaIcon'
-import LetterIcon from '../../../icons/LetterIcon'
-import BellIcon from '../../../icons/BellIcon'
 import TwitSSR from '../../../components/TwitSSR'
 import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import { TwitInfo, UserReducedInfo } from '../../../firebase/client'
@@ -12,8 +8,8 @@ import BotonToGoBack from '../../../components/BotonToGoBack'
 import { firesAdmin } from '../../../firebase/admin'
 import useUser from '../../../hooks/useUser'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 import { colors } from '../../../styles/StyleGlobal'
+import Footer from '../../../components/Footer'
 
 interface StatusTwitProps {
     twit : TwitInfo
@@ -41,12 +37,7 @@ export default function StatusTwit ({ twit } : StatusTwitProps): ReactElement {
 
         </section>
 
-        <footer>
-          <Link href="/"><a><HomeIcon /></a></Link>
-          <Link href="/"><a><LupaIcon /></a></Link>
-          <Link href="/"><a><BellIcon /></a></Link>
-          <Link href="/"><a><LetterIcon /></a></Link>
-        </footer>
+        <Footer/>
       </main>
       <style jsx>{statusTwitStyle}</style>
       <style jsx>{`
@@ -66,6 +57,7 @@ export const getServerSideProps : GetServerSideProps<{[key: string]: any}> = asy
     imgURL: null,
     likes: 0,
     shared: 0,
+    userRef: '',
     user: {
       avatar: '',
       username: '',
@@ -86,11 +78,12 @@ export const getServerSideProps : GetServerSideProps<{[key: string]: any}> = asy
     const twitID : string = Array.isArray(id) ? id[0] : id
     const content : string = storedData.content
     const user: UserReducedInfo = storedData.user
+    const userRef: string = user.email
     const createdAt: number = storedData.createdAt._seconds * 1000
     const likes: number = storedData.likes
     const shared : number = storedData.shared
     const imgURL : string | null = storedData.imgURL
-    const twit : TwitInfo = { twitID, content, user, createdAt, likes, shared, imgURL }
+    const twit : TwitInfo = { twitID, content, user, userRef, createdAt, likes, shared, imgURL }
 
     return { props: { twit } }
   }
@@ -100,8 +93,7 @@ export const getServerSideProps : GetServerSideProps<{[key: string]: any}> = asy
 }
 
 const statusTwitStyle = css`
-  header,
-  footer {
+  header {
     display: flex;
     align-items: center;
     position: fixed;
@@ -110,12 +102,6 @@ const statusTwitStyle = css`
     max-width: 500px;
     background-color: white;
     z-index: 1;
-  }
-
-  footer {
-    bottom: 0;
-    border-top: 1px solid lightblue;
-    display: flex;
   }
 
   header {
@@ -133,13 +119,6 @@ const statusTwitStyle = css`
     font-size: 1.3rem;
   }
 
-  a {
-    margin:auto;
-    border-radius: 50%;
-    width:40px;
-    height:40px;
-    display:flex;
-  }
 `
 
 /* ----------------------------------
