@@ -19,7 +19,7 @@ export default function Twit ({ twit }: TwitProps): ReactElement {
   const router = useRouter()
 
   const handleClick :MouseEventHandler = () => {
-    router.push('/status/[id]', `status/${twit.twitID}`)
+    router.push('/status/[id]', `/status/${twit.twitID}`)
   }
 
   return (

@@ -5,6 +5,7 @@ import Boton from '../../../components/Boton'
 import Avatar from '../../../components/Avatar'
 import { colors } from '../../../styles/StyleGlobal'
 import Spinner from '../../../components/Spinner'
+import LoadingAvatar from '../../../components/LoadingAvatar'
 import useTwitComposer from '../../../hooks/useTwitComposer'
 import PictureIcon from '../../../icons/PictureIcon'
 import BotonToGoBack from '../../../components/BotonToGoBack'
@@ -42,7 +43,7 @@ export default function index (): ReactElement {
         </header>
         <section>
           {user === undefined && <Spinner />}
-          {user === null && <p>intento cargar</p>}
+          {user === null && <LoadingAvatar small/>}
           {user && <Avatar user={user} />}
 
           <form onSubmit={handleSubmit}>

@@ -12,6 +12,7 @@ import { firesAdmin } from '../../../firebase/admin'
 import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import Footer from '../../../components/Footer'
 import useUser from '../../../hooks/useUser'
+import LoadingAvatar from '../../../components/LoadingAvatar'
 
 export default function index ({ userSSR } : {userSSR: User}): ReactElement {
   const [timeline, setTimeline] = useState<TwitInfo[] | void>([])
@@ -26,7 +27,7 @@ export default function index ({ userSSR } : {userSSR: User}): ReactElement {
       <main>
         <header>
           {user === undefined && <Spinner />}
-          {user === null && <p>intento cargar</p>}
+          {user === null && <LoadingAvatar small/>}
           {user && <Avatar user={user} small={true} />}
           <strong>Perfil de {userSSR.username}</strong>
         </header>
@@ -45,7 +46,7 @@ export default function index ({ userSSR } : {userSSR: User}): ReactElement {
         )}
         {userSSR === null && (
           <section>
-            <p>intento cargar</p>
+            <LoadingAvatar userPage displayName/>
           </section>
         )}
         {userSSR && (

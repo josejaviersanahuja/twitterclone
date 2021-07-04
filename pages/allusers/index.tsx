@@ -3,6 +3,7 @@ import React, { ReactElement, useState, useEffect } from 'react'
 import BotonToGoBack from '../../components/BotonToGoBack'
 import Spinner from '../../components/Spinner'
 import Avatar from '../../components/Avatar'
+import LoadingAvatar from '../../components/LoadingAvatar'
 import Footer from '../../components/Footer'
 import useUser from '../../hooks/useUser'
 import css from 'styled-jsx/css'
@@ -20,8 +21,8 @@ export default function index (): ReactElement {
     <main>
       <header>
         <BotonToGoBack/>
-        {user === undefined && <Spinner />}
-        {user === null && <p>intento cargar</p>}
+        {user === undefined && <p>Invitado Detectado</p>}
+        {user === null && <LoadingAvatar small/>}
         {user && <Avatar user={user} small/>}
         <strong>All Users</strong>
       </header>

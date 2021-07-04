@@ -5,6 +5,8 @@ import Avatar from '../../components/Avatar'
 import { listenLatestTwits, TwitInfo } from '../../firebase/client'
 import BotonCompose from '../../components/BotonCompose'
 import Spinner from '../../components/Spinner'
+import LoadingAvatar from '../../components/LoadingAvatar'
+import LoadingTwits from '../../components/LoadingTwits'
 import css from 'styled-jsx/css'
 import useUser, { ValidUser } from '../../hooks/useUser'
 import { useRouter } from 'next/router'
@@ -38,7 +40,7 @@ export default function Home (): ReactElement {
       <main>
         <header>
           {user === undefined && <Spinner />}
-          {user === null && <p>intento cargar</p>}
+          {user === null && <LoadingAvatar small />}
           {user && <Avatar user={user} small={true} />}
           <strong>Inicio</strong>
 
@@ -50,7 +52,7 @@ export default function Home (): ReactElement {
         )}
         {user === null && (
           <section>
-            <p>intento cargar</p>
+            <LoadingTwits/>
           </section>
         )}
         {user && (

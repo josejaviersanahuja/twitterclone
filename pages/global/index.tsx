@@ -4,7 +4,8 @@ import Twit from '../../components/Twit'
 import Avatar from '../../components/Avatar'
 import { getGlobalLatestTwits, TwitInfo } from '../../firebase/client'
 import BotonCompose from '../../components/BotonCompose'
-import Spinner from '../../components/Spinner'
+import LoadingAvatar from '../../components/LoadingAvatar'
+import LoadingTwits from '../../components/LoadingTwits'
 import css from 'styled-jsx/css'
 import useUser, { ValidUser } from '../../hooks/useUser'
 import Footer from '../../components/Footer'
@@ -23,8 +24,8 @@ export default function Home (): ReactElement {
     <>
       <main>
         <header>
-          {user === undefined && <Spinner />}
-          {user === null && <p>Invitado detectado</p>}
+          {user === undefined && <p>Invitado detectado</p>}
+          {user === null && <LoadingAvatar small/>}
           {user && <Avatar user={user} small={true} />}
           <strong>Twits Globales</strong>
 
@@ -35,7 +36,7 @@ export default function Home (): ReactElement {
               ? timeline.map((twit) => (
               <Twit key={twit.twitID} twit={twit} />
               ))
-              : <p>El global timeline esta vacío</p>}
+              : <LoadingTwits/>}
               {/* REVISAR SI ALGUNA VEZ EL TIMELINE ES VOID A VER QUE HACER */}
           </section>
           : <section><p>timeline es void</p></section>}

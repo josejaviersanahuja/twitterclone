@@ -65,13 +65,21 @@ export const getServerSideProps : GetServerSideProps<{[key: string]: any}> = asy
       id: ''
     }
   }
+  console.log('entro en serverside rendering mode')
+
   const { params, res } = context
   const { id } = params
 
-  const apiResponse = await firesAdmin.collection(process.env.NEXT_PUBLIC_twits_collection).doc(id).get().then(doc => {
-    const data = doc.data()
-    return data
-  })
+  const apiResponse = await firesAdmin
+    .collection(process.env.NEXT_PUBLIC_twits_collection)
+    .doc(id)
+    .get()
+    .then(doc => {
+      const data = doc.data()
+      return data
+    })
+  console.log(apiResponse, 'en serverside')
+
   // await fetch(`http://localhost:3000/api/twit/${id}`)
   if (apiResponse) {
     storedData = apiResponse// await JSON.parse(apiResponse)
