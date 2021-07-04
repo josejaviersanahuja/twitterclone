@@ -18,7 +18,6 @@ export default function useUser (): ValidUser | null | undefined {
   useEffect(() => {
     onAuthStateChange(twoFunctionsInOne)
   }, [])
-  console.log(userFullData)
 
   return { user, userFullData }
 }

@@ -4,7 +4,7 @@ import React, { ReactElement } from 'react'
 // import useUser, { ValidUser } from '../../../hooks/useUser'
 import Spinner from '../../../components/Spinner'
 import Avatar from '../../../components/Avatar'
-import Twit from '../../../components/Twit'
+import TwitSSR from '../../../components/TwitSSR'
 import BellIcon from '../../../icons/BellIcon'
 import LupaIcon from '../../../icons/LupaIcon'
 import HomeIcon from '../../../icons/HomeIcon'
@@ -26,10 +26,16 @@ export default function index ({ user, timeline }): ReactElement {
         <header>
           {user === undefined && <Spinner />}
           {user === null && <p>intento cargar</p>}
-          {user && <Avatar user={userReducedInfo} small={true} userPage />}
-          <strong>Profile de {user.username}</strong>
+          {user && <Avatar user={userReducedInfo} small={true} />}
+          <strong>Perfil de {user.username}</strong>
         </header>
-        {user && <div>Following: {user.following}, Followers: {user.followers}</div>}
+        {user && (<div>
+          <Avatar
+            user={userReducedInfo}
+            userPage
+            displayName
+          />
+        </div>)}
         {user === undefined && (
           <section>
             <Spinner />
@@ -44,7 +50,7 @@ export default function index ({ user, timeline }): ReactElement {
           <section>
             {Array.isArray(timeline)
               ? timeline.map((twit) => (
-                <Twit key={twit.twitID} twit={twit} />
+                <TwitSSR key={twit.twitID} twit={twit} />
               ))
               : <p>timeline es void</p>}
 
@@ -149,5 +155,8 @@ const homeStyle = css`
       width:40px;
       height:40px;
       display:flex;
+    }
+    div {
+      margin-top:3rem;
     }
   `

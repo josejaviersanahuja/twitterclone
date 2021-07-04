@@ -22,7 +22,8 @@ export default function Avatar ({ user, displayName = false, small = false, user
 
   return (
     <>
-      <div className="avatar">
+      <div className={userPage ? 'avatarUserPage' : 'avatar'}>
+
         <Link href="/user/[id]" as={`/user/${user.id}`} ><a><Image
           loader={myLoader}
           src={myLoader()}
@@ -32,7 +33,14 @@ export default function Avatar ({ user, displayName = false, small = false, user
           className="fotoAvatar"
         /></a></Link>
         {displayName && <strong>{user.username}</strong>}
-        {userPage && <div>Following: {userFullData.following.length}, Followers: {userFullData.followers.length}</div>}
+
+        {userPage && userFullData && (<div className="details">
+          Email: {user.email}
+        </div>)}
+
+        {userPage && userFullData && (<div className="details">
+          Following: {userFullData.following.length}, Followers: {userFullData.followers.length}
+        </div>)}
         <style jsx>{avatarStyle}</style>
       </div>
     </>
@@ -42,7 +50,7 @@ export default function Avatar ({ user, displayName = false, small = false, user
 const avatarStyle = css`
         .avatar {
           display: flex;
-          flex-direction: row;
+          flex-direction:row;
           align-items: center;
           height: auto;
           justify-content: space-evenly;
@@ -51,5 +59,17 @@ const avatarStyle = css`
         }
         
         strong {
+          margin: auto;
         }
+        
+        .avatarUserPage {
+          width:100%;
+          display:grid;
+          grid-template-columns: 18% 82%;
+          place-items:center;
+        }
+        .details {
+          grid-column:2/3;
+          margin-bottom:1rem;
+        }        
       `

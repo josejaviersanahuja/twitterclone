@@ -46,6 +46,7 @@ export default function Home (): ReactElement {
           {user === null && <p>intento cargar</p>}
           {user && <Avatar user={user} small={true} />}
           <strong>Inicio</strong>
+
         </header>
         {user === undefined && (
           <section>
