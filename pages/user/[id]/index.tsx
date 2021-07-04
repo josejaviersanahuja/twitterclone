@@ -24,7 +24,6 @@ export default function index ({ user } : {user: User}): ReactElement {
   useEffect(() => {
     user && getUserLatestTwits(userReducedInfo, setTimeline)
   }, [])
-  console.log(timeline, user, userReducedInfo)
 
   return (
     <>
@@ -111,9 +110,7 @@ export const getServerSideProps: GetServerSideProps<{ [key: string]: any }> = as
 
   if (apiUserResponse) { // && apiTimelineResponse) {
     user = apiUserResponse
-    console.log('getServersideProps ok user = ', user)
-
-    // const timeline = apiTimelineResponse// await JSON.parse(apiUserResponse)
+    // console.log('getServersideProps ok user = ', user)
     return { props: { user } }
   }
   if (res) {
