@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import { sendTwit, User } from '../firebase/client'
+import { sendTwit, UserReducedInfo } from '../firebase/client'
 import useUser from './useUser'
 import useDragDropImg from './useDragDropImg'
 
@@ -31,7 +31,7 @@ export default function useTwitComposer () {
   const [textAreaValue, setTextAreaValue] = useState('')
   const [messageStatus, setmessageStatus] = useState(MESSAGEStatus[IDK])
   const router = useRouter()
-  const user: User | null | undefined = useUser()
+  const { user }: { user: UserReducedInfo } = useUser()
   const isBotonDisable: boolean =
     textAreaValue === '' || messageStatus === MESSAGEStatus[SENDING]
 

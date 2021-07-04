@@ -1,9 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { ReactElement } from 'react'
-import { UserReducedInfo } from '../../firebase/client'
+import { User, UserReducedInfo } from '../../firebase/client'
 import Image from 'next/image'
 import css from 'styled-jsx/css'
-import useUser from '../../hooks/useUser'
 import Link from 'next/link'
 
 interface ProfileProps {
@@ -11,11 +10,17 @@ interface ProfileProps {
   displayName?: boolean;
   small?: boolean;
   userPage? : boolean;
+  userFullData? : User
 }
 
-export default function Avatar ({ user, displayName = false, small = false, userPage = false }: ProfileProps): ReactElement {
-  const { userFullData } = useUser()
-
+export default function Avatar (
+  {
+    user,
+    displayName = false,
+    small = false,
+    userPage = false,
+    userFullData = null
+  }: ProfileProps): ReactElement {
   const myLoader = () => {
     return `${user.avatar}`
   }

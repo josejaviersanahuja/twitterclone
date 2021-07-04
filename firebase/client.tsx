@@ -84,7 +84,7 @@ export const amplifyUserInformation = (user: UserReducedInfo | undefined, callba
             followers: doc.data().followers
           }
           callback(finalUser)
-          console.log('Document data:', finalUser)
+          // console.log('Document data:', finalUser)
         } else {
           // replace de log for the setter with empty fllow(ers|ing)[] []
           console.log('No such document!')
@@ -143,6 +143,7 @@ export const sendTwit = ({
 > => {
   const twitToStore = {
     user: user,
+    userRef: user.email,
     content: textAreaValue,
     createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
     likes: 0,
@@ -160,6 +161,7 @@ export interface TwitInfo {
   twitID: string;
   content: string;
   user: UserReducedInfo;
+  userRef: string
   createdAt: number; // in miliseconds?
   likes: number;
   shared: number;
@@ -173,6 +175,7 @@ export const extractTwitsFromFirebase = (
     const twitID: string = e.id
     const content: string = e.data().content
     const user: User = e.data().user
+    const userRef: string = user.email
     const createdAt: number = +e.data().createdAt.toDate()
     const likes: number = e.data().likes
     const shared: number = e.data().shared
@@ -181,6 +184,7 @@ export const extractTwitsFromFirebase = (
       twitID,
       content,
       user,
+      userRef,
       createdAt,
       likes,
       shared,
@@ -197,6 +201,19 @@ export const listenLatestTwits = (callback) => {
     .orderBy('createdAt', 'desc')
     .limit(20)
     .onSnapshot((snapshot) => {
+      const latestTwits: TwitInfo[] | void = extractTwitsFromFirebase(snapshot)
+      callback(latestTwits)
+    })
+}
+
+export const getUserLatestTwits = (userReducedInfo, callback) : Promise<void> => {
+  return db
+    .collection(process.env.NEXT_PUBLIC_twits_collection)
+    .where('userRef', '==', userReducedInfo.email)
+    .orderBy('createdAt', 'desc')
+    .limit(20)
+    .get()
+    .then((snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>) => {
       const latestTwits: TwitInfo[] | void = extractTwitsFromFirebase(snapshot)
       callback(latestTwits)
     })

@@ -34,18 +34,20 @@ export default function index (): ReactElement {
 const botonCompose = css`
   aside {
     position: fixed;
-    bottom: 4rem;
-    right: 15px;
+    bottom: 0;
     width: 100%;
-    width: 4rem;
-    height: 4rem;
-    display: flex;
+    max-width:500px;
+    height: 3rem;
+    display:flex;
+    justify-content: flex-end;
   }
   div {
     border-radius: 50%;
     width: 4rem;
     height: 4rem;
-    margin: auto;
-    display: flex;
+    display:flex;
+    position:relative;
+    top: -5rem;
+    right: 15px;
   }
 `

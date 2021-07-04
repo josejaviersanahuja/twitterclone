@@ -1,10 +1,10 @@
 /* eslint-disable no-use-before-define */
 // import { useRouter } from 'next/router'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState, useEffect } from 'react'
 // import useUser, { ValidUser } from '../../../hooks/useUser'
 import Spinner from '../../../components/Spinner'
 import Avatar from '../../../components/Avatar'
-import TwitSSR from '../../../components/TwitSSR'
+import Twit from '../../../components/Twit'
 import BellIcon from '../../../icons/BellIcon'
 import LupaIcon from '../../../icons/LupaIcon'
 import HomeIcon from '../../../icons/HomeIcon'
@@ -13,13 +13,19 @@ import LetterIcon from '../../../icons/LetterIcon'
 import Link from 'next/link'
 import { colors } from '../../../styles/StyleGlobal'
 import css from 'styled-jsx/css'
-import { extractTwitsFromFirebase, reduceUserInformation, TwitInfo, User } from '../../../firebase/client'
+import { getUserLatestTwits, reduceUserInformation, TwitInfo, User } from '../../../firebase/client'
 import { firesAdmin } from '../../../firebase/admin'
 import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 
-export default function index ({ user, timeline }): ReactElement {
-  // const [timeline, setTimeline] = useState<TwitInfo[] | void>([])
+export default function index ({ user } : {user: User}): ReactElement {
+  const [timeline, setTimeline] = useState<TwitInfo[] | void>([])
   const userReducedInfo = reduceUserInformation(user)
+
+  useEffect(() => {
+    user && getUserLatestTwits(userReducedInfo, setTimeline)
+  }, [])
+  console.log(timeline, user, userReducedInfo)
+
   return (
     <>
       <main>
@@ -34,6 +40,7 @@ export default function index ({ user, timeline }): ReactElement {
             user={userReducedInfo}
             userPage
             displayName
+            userFullData={user}
           />
         </div>)}
         {user === undefined && (
@@ -50,9 +57,9 @@ export default function index ({ user, timeline }): ReactElement {
           <section>
             {Array.isArray(timeline)
               ? timeline.map((twit) => (
-                <TwitSSR key={twit.twitID} twit={twit} />
+                <Twit key={twit.twitID} twit={twit} />
               ))
-              : <p>timeline es void</p>}
+              : <Spinner/>}
 
           </section>
         )}
@@ -94,18 +101,20 @@ export const getServerSideProps: GetServerSideProps<{ [key: string]: any }> = as
       const data = doc.data()
       return data
     })
-  const apiTimelineResponse: void | TwitInfo[] = await firesAdmin
+  /* const apiTimelineResponse: void | TwitInfo[] = await firesAdmin
     .collection(process.env.NEXT_PUBLIC_twits_collection)
     .get()
     .then(snapshot => {
       const timeline = extractTwitsFromFirebase(snapshot)
       return timeline
-    })
-  // await fetch(`http://localhost:3000/api/twit/${id}`)
-  if (apiUserResponse && apiTimelineResponse) {
+    }) */
+
+  if (apiUserResponse) { // && apiTimelineResponse) {
     user = apiUserResponse
-    const timeline = apiTimelineResponse// await JSON.parse(apiUserResponse)
-    return { props: { user, timeline } }
+    console.log('getServersideProps ok user = ', user)
+
+    // const timeline = apiTimelineResponse// await JSON.parse(apiUserResponse)
+    return { props: { user } }
   }
   if (res) {
     res.writeHead(301, { Location: '/home' }).end()
