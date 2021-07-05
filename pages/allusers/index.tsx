@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 import React, { ReactElement, useState, useEffect } from 'react'
 import BotonToGoBack from '../../components/BotonToGoBack'
-import Spinner from '../../components/Spinner'
+import LoadingAllUsers from '../../components/LoadingAllUsers'
 import Avatar from '../../components/Avatar'
 import LoadingAvatar from '../../components/LoadingAvatar'
 import Footer from '../../components/Footer'
@@ -37,7 +37,7 @@ export default function index (): ReactElement {
                   <p>{user.email}</p></div>
               </article>
               ))
-              : <Spinner/>}
+              : <LoadingAllUsers/>}
               {/* REVISAR SI ALGUNA VEZ EL allUsers ES VOID A VER QUE HACER */}
           </section>
         : <section><p>allUsers es void</p></section>}
