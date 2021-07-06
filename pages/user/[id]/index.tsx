@@ -1,26 +1,34 @@
 /* eslint-disable no-use-before-define */
 // import { useRouter } from 'next/router'
-import React, { ReactElement, useState, useEffect } from 'react'
+import React, { ReactElement, useState, useEffect, MouseEventHandler } from 'react'
 // import useUser, { ValidUser } from '../../../hooks/useUser'
 import Spinner from '../../../components/Spinner'
 import Avatar from '../../../components/Avatar'
 import Twit from '../../../components/Twit'
 import BotonCompose from '../../../components/BotonCompose'
 import css from 'styled-jsx/css'
-import { getUserLatestTwits, reduceUserInformation, TwitInfo, User } from '../../../firebase/client'
+import { getUserLatestTwits, logout, reduceUserInformation, TwitInfo, User } from '../../../firebase/client'
 import { firesAdmin } from '../../../firebase/admin'
 import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
 import Footer from '../../../components/Footer'
 import useUser from '../../../hooks/useUser'
 import LoadingAvatar from '../../../components/LoadingAvatar'
+import Boton from '../../../components/Boton'
+import { useRouter } from 'next/router'
 
 export default function index ({ userSSR } : {userSSR: User}): ReactElement {
   const [timeline, setTimeline] = useState<TwitInfo[] | void>([])
   const userReducedInfo = reduceUserInformation(userSSR)
   const { user } = useUser()
+  const router = useRouter()
   useEffect(() => {
     userSSR && getUserLatestTwits(userReducedInfo, setTimeline)
   }, [])
+
+  const handleLogOut : MouseEventHandler = () :void => {
+    logout()
+    router.push('/')
+  }
 
   return (
     <>
@@ -30,6 +38,7 @@ export default function index ({ userSSR } : {userSSR: User}): ReactElement {
           {user === null && <LoadingAvatar small/>}
           {user && <Avatar user={user} small={true} />}
           <strong>Perfil de {userSSR.username}</strong>
+          <Boton onClick={handleLogOut} botonBackGroundColor="#19F" botonColor="white"><>Log out</></Boton>
         </header>
         {userSSR && (<div>
           <Avatar
@@ -129,7 +138,7 @@ const homeStyle = css`
     }
   
     strong {
-      margin-left: 1.5rem;
+      margin: 0 1.5rem;
       font-size: 1.3rem;
     }
   

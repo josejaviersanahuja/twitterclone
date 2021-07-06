@@ -157,6 +157,19 @@ export const loginWithGitHub = () => {
   return firebase.auth().signInWithPopup(githubProvider)
 }
 
+export const loginWithGoogle = () => {
+  const googleProvider = new firebase.auth.GoogleAuthProvider()
+  return firebase.auth().signInWithPopup(googleProvider)
+}
+
+export const loginWithFacebook = () => {
+  const facebookProvider = new firebase.auth.FacebookAuthProvider()
+  return firebase.auth().signInWithPopup(facebookProvider)
+}
+
+export const logout = () => {
+  return firebase.auth().signOut()
+}
 /* ---------------------------------------
 Ahora trabajamos con los twits
 ------------------------------------ */
@@ -227,7 +240,7 @@ export const extractTwitsFromFirebase = (
   })
   return latestTwits
 }
-
+// este listen debe incluir a todos los users following y al usuario conectado
 export const listenLatestTwits = (callback) => {
   return db
     .collection(process.env.NEXT_PUBLIC_twits_collection)

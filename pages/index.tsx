@@ -3,7 +3,7 @@ import { colors } from '../styles/StyleGlobal'
 import Avatar from '../components/Avatar'
 import { MouseEventHandler, useEffect } from 'react'
 import Image from 'next/image'
-import { loginWithGitHub } from '../firebase/client'
+import { loginWithFacebook, loginWithGitHub, loginWithGoogle } from '../firebase/client'
 import LoginBotons from '../components/LoginBotons/LoginBotons'
 import css from 'styled-jsx/css'
 import { useRouter } from 'next/router'
@@ -18,8 +18,16 @@ export default function SignIn () {
     }
   }, [user])
 
-  const handleClick : MouseEventHandler = () :void => {
+  const handleClickGithub : MouseEventHandler = () :void => {
     loginWithGitHub().catch(err => console.error(err))
+  }
+
+  const handleClickGoogle : MouseEventHandler = () :void => {
+    loginWithGoogle().catch(err => console.error(err))
+  }
+
+  const handleClickFacebook : MouseEventHandler = () :void => {
+    loginWithFacebook().catch(err => console.error(err))
   }
 
   return (
@@ -30,7 +38,11 @@ export default function SignIn () {
         <h1>Twitter <span>Clone</span></h1>
         <h2>Talk to everybody about</h2>
         <h2><span>Religion and politics</span></h2>
-        {user === undefined && <LoginBotons handleClick={handleClick} />}
+        {user === undefined && <LoginBotons
+          handleClickGithub={handleClickGithub}
+          handleClickGoogle={handleClickGoogle}
+          handleClickFacebook={handleClickFacebook}
+          />}
         { user
           ? <Avatar user={user} displayName/>
           : null}

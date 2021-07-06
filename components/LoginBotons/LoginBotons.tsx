@@ -2,20 +2,22 @@
 import React, { MouseEventHandler, ReactElement } from 'react'
 import Boton from '../Boton'
 import GithubIcon from '../../icons/GithubIcon'
-import FacebookIcon from '../../icons/FacebookIcon'
+// import FacebookIcon from '../../icons/FacebookIcon'
 import GoogleIcon from '../../icons/GoogleIcon'
 
 interface Props {
-    handleClick: MouseEventHandler
+    handleClickGithub: MouseEventHandler
+    handleClickGoogle: MouseEventHandler
+    handleClickFacebook: MouseEventHandler
 }
 
-export default function LoginBotons ({ handleClick }: Props): ReactElement {
+export default function LoginBotons ({ handleClickGithub, handleClickGoogle, handleClickFacebook }: Props): ReactElement {
   return (
         <>
             <Boton
           botonBackGroundColor="#000000"
           botonColor="#ffffff"
-          onClick={handleClick}
+          onClick={handleClickGithub}
         >
           <>
           <GithubIcon/>
@@ -23,20 +25,20 @@ export default function LoginBotons ({ handleClick }: Props): ReactElement {
           </>
         </Boton>
         <br/><br/>
-        <Boton
+        {/* <Boton
           botonBackGroundColor="#0000FF"
           botonColor="#FFFFFF"
-          onClick={handleClick}
+          onClick={handleClickFacebook}
         >
           <>
           <FacebookIcon/>
           Login with Facebook
           </>
-        </Boton><br/><br/>
+        </Boton><br/><br/> */}
         <Boton
           botonBackGroundColor="#4285F4"
           botonColor="#FFFFFF"
-          onClick={handleClick}
+          onClick={handleClickGoogle}
         >
           <>
           <GoogleIcon/>
