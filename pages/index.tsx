@@ -42,12 +42,9 @@ export default function SignIn () {
 
 const signInStyle = css`
   button {
-    margin-top:1rem;
     font-size:1.2em;
   }
-  i {
-    margin:.35rem;
-  }
+  
   section{
     text-align:center;
     width:100%;
@@ -57,5 +54,7 @@ const signInStyle = css`
     background: ${colors.primary};
     margin: auto;
   }
-  
+  h2:nth-child(2n) {
+    margin-bottom:1rem;
+  }
   `
