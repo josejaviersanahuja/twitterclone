@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, SetStateAction, Dispatch } from 'react'
 import { amplifyUserInformation, onAuthStateChange, User, UserReducedInfo } from '../firebase/client'
 
 export interface ValidUser {
   user: UserReducedInfo,
   userFullData : User | null | undefined
+  setuserFullData : Dispatch<SetStateAction<User>>
 }
 
 export default function useUser (): ValidUser | null | undefined {
@@ -19,5 +20,5 @@ export default function useUser (): ValidUser | null | undefined {
     onAuthStateChange(twoFunctionsInOne)
   }, [])
 
-  return { user, userFullData }
+  return { user, userFullData, setuserFullData }
 }

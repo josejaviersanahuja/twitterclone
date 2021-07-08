@@ -133,6 +133,40 @@ export const addFollowerFollowing = (followerUser: User, userToFollow: User): vo
       alert(`error: ${error}. please try again later`)
     })
 }
+// ahora queremos dejar de seguir (condicion previa, followerUser ya sigue a userToFollow)
+export const removeFollowerFollowing = (followerUser: User, userToFollow: User): void => {
+  const finalFollowerUser : User = {
+    ...followerUser,
+    following: followerUser.following.filter(e => e !== userToFollow.id)
+  }
+
+  db.collection(process.env.NEXT_PUBLIC_users_collection)
+    .doc(followerUser.id)
+    .set(finalFollowerUser)
+    .then(() => {
+      console.log('Document successfully overwritten!')
+    })
+    .catch((error) => {
+      console.error('Error writing document: ', error)
+      alert(`error: ${error}. please try again later`)
+    })
+
+  const finalUserToFollow : User = {
+    ...userToFollow,
+    followers: userToFollow.followers.filter(e => e !== followerUser.id)
+  }
+
+  db.collection(process.env.NEXT_PUBLIC_users_collection)
+    .doc(userToFollow.id)
+    .set(finalUserToFollow)
+    .then(() => {
+      console.log('Document successfully overwritten!')
+    })
+    .catch((error) => {
+      console.error('Error writing document: ', error)
+      alert(`error: ${error}. please try again later`)
+    })
+}
 
 export const extractUsersFromFirebase = (
   snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
