@@ -23,7 +23,7 @@ export default function index ({ userSSR } : {userSSR: User}): ReactElement {
   const router = useRouter()
   useEffect(() => {
     userSSR && getUserLatestTwits(userReducedInfo, setTimeline)
-  }, [])
+  }, [userSSR])
 
   const handleLogOut : MouseEventHandler = () :void => {
     logout()
@@ -36,16 +36,16 @@ export default function index ({ userSSR } : {userSSR: User}): ReactElement {
         <header>
           {user === undefined && <Spinner />}
           {user === null && <LoadingAvatar small/>}
-          {user && <Avatar user={user} small={true} />}
+          {user && <Avatar userA={user} small={true} />}
           <strong>Perfil de {userSSR.username}</strong>
-          <Boton onClick={handleLogOut} botonBackGroundColor="#19F" botonColor="white"><>Log out</></Boton>
+          {user && user.id === userSSR.id && <Boton onClick={handleLogOut} botonBackGroundColor="#19F" botonColor="white"><>Log out</></Boton> }
         </header>
         {userSSR && (<div>
           <Avatar
-            user={userReducedInfo}
+            userA={userReducedInfo}
             userPage
             displayName
-            userFullData={userSSR}
+            userFullDataA={userSSR}
           />
         </div>)}
         {userSSR === undefined && (

@@ -23,7 +23,7 @@ export default function index (): ReactElement {
         <BotonToGoBack/>
         {user === undefined && <p>Invitado Detectado</p>}
         {user === null && <LoadingAvatar small/>}
-        {user && <Avatar user={user} small/>}
+        {user && <Avatar userA={user} small/>}
         <strong>All Users</strong>
       </header>
 
@@ -32,7 +32,7 @@ export default function index (): ReactElement {
             { allUsers.length > 0
               ? allUsers.map(user => (
               <article key={user.id} >
-                  <Avatar user={reduceUserInformation(user)} />
+                  <Avatar userA={reduceUserInformation(user)} />
                   <div><p>{user.username}</p>
                   <p>{user.email}</p></div>
               </article>

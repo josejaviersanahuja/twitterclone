@@ -44,7 +44,7 @@ export default function index (): ReactElement {
         <section>
           {user === undefined && <Spinner />}
           {user === null && <LoadingAvatar small/>}
-          {user && <Avatar user={user} />}
+          {user && <Avatar userA={user} />}
 
           <form onSubmit={handleSubmit}>
             <textarea

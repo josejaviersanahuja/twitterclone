@@ -18,7 +18,7 @@ export default function Twit ({ twit }: TwitProps): ReactElement {
   return (
     <>
       <article>
-        <Avatar user={twit.user}/>
+        <Avatar userA={twit.user}/>
         <pre>
           <h5>
             {twit.user.username}.

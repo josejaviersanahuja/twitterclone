@@ -26,7 +26,7 @@ export default function Home (): ReactElement {
         <header>
           {user === undefined && <p>Invitado detectado</p>}
           {user === null && <LoadingAvatar small/>}
-          {user && <Avatar user={user} small={true} />}
+          {user && <Avatar userA={user} small={true} />}
           <strong>Twits Globales</strong>
 
         </header>

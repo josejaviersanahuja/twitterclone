@@ -44,7 +44,7 @@ export default function SignIn () {
           handleClickFacebook={handleClickFacebook}
           />}
         { user
-          ? <Avatar user={user} displayName/>
+          ? <Avatar userA={user} displayName/>
           : null}
         </section>
       </main>

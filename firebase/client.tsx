@@ -26,8 +26,8 @@ export interface User {
   username: string;
   email: string;
   id: string;
-  following: [];
-  followers: [];
+  following: string[];
+  followers: string[];
 }
 
 export interface UserReducedInfo {
@@ -98,6 +98,40 @@ export const amplifyUserInformation = (user: UserReducedInfo | undefined, callba
   } else {
     callback(undefined)
   }
+}
+// queremos añadir following followers
+export const addFollowerFollowing = (followerUser: User, userToFollow: User): void => {
+  const finalFollowerUser : User = {
+    ...followerUser,
+    following: followerUser.following.concat([userToFollow.id])
+  }
+
+  db.collection(process.env.NEXT_PUBLIC_users_collection)
+    .doc(followerUser.id)
+    .set(finalFollowerUser)
+    .then(() => {
+      console.log('Document successfully overwritten!')
+    })
+    .catch((error) => {
+      console.error('Error writing document: ', error)
+      alert(`error: ${error}. please try again later`)
+    })
+
+  const finalUserToFollow : User = {
+    ...userToFollow,
+    followers: userToFollow.followers.concat([followerUser.id])
+  }
+
+  db.collection(process.env.NEXT_PUBLIC_users_collection)
+    .doc(userToFollow.id)
+    .set(finalUserToFollow)
+    .then(() => {
+      console.log('Document successfully overwritten!')
+    })
+    .catch((error) => {
+      console.error('Error writing document: ', error)
+      alert(`error: ${error}. please try again later`)
+    })
 }
 
 export const extractUsersFromFirebase = (

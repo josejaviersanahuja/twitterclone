@@ -41,7 +41,7 @@ export default function Home (): ReactElement {
         <header>
           {user === undefined && <Spinner />}
           {user === null && <LoadingAvatar small />}
-          {user && <Avatar user={user} small={true} />}
+          {user && <Avatar userA={user} small={true} />}
           <strong>Inicio</strong>
 
         </header>
