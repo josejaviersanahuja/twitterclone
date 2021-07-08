@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { ReactElement } from 'react'
-import { addFollowerFollowing, User, UserReducedInfo } from '../../firebase/client'
+import { addFollowerFollowing, removeFollowerFollowing, User, UserReducedInfo } from '../../firebase/client'
 import Image from 'next/image'
 import css from 'styled-jsx/css'
 import Link from 'next/link'
@@ -37,6 +37,10 @@ export default function Avatar (
     addFollowerFollowing(userFullData, userFullDataA)
     router.reload()
   }
+  const handleUnFollowClick = () => {
+    removeFollowerFollowing(userFullData, userFullDataA)
+    router.reload()
+  }
 
   return (
     <>
@@ -60,15 +64,25 @@ export default function Avatar (
         <>Following: {userFullDataA.following.length} Followers: {userFullDataA.followers.length}.</>
 {/* Ahora estas ternarias sirven para distinguir si el user que esta en esta página es el mismo usuario o no */}
 
-           <Boton
+           { userFullData && FollowingThisUser()
+             ? <Boton
+                  onClick={() => { handleUnFollowClick() }}
+                  botonBackGroundColor={colors.third}
+                  botonColor="white"
+                  disabled={!userFullData || userFullData.id === userFullDataA.id}
+                  style={{ marginLeft: '1rem' }}
+               >
+                  <>Dejar de seguir</>
+               </Boton>
+             : <Boton
             onClick={() => { handleFollowClick() }}
             botonBackGroundColor={colors.third}
             botonColor="white"
-            disabled={!userFullData || userFullData.id === userFullDataA.id || FollowingThisUser()}
+            disabled={!userFullData || userFullData.id === userFullDataA.id}
             style={{ marginLeft: '1rem' }}
           >
-            <>Follow</>
-          </Boton>
+            <>Seguir</>
+          </Boton>}
         </div>)}
         <style jsx>{avatarStyle}</style>
       </div>
