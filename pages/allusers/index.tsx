@@ -12,9 +12,11 @@ import { getAllUsers, reduceUserInformation } from '../../firebase/client'
 export default function index (): ReactElement {
   const { user } = useUser()
   const [allUsers, setallUsers] = useState([])
+  const [loading, setloading] = useState(false)
 
   useEffect(() => {
-    getAllUsers(setallUsers)
+    setloading(true)
+    getAllUsers(setallUsers).then(algo => setloading(false))
   }, [])
 
   return (<>
@@ -29,7 +31,7 @@ export default function index (): ReactElement {
 
       {Array.isArray(allUsers)
         ? <section>
-            { allUsers.length > 0
+            { allUsers.length > 0 && !loading
               ? allUsers.map(user => (
               <article key={user.id} >
                   <Avatar userA={reduceUserInformation(user)} />

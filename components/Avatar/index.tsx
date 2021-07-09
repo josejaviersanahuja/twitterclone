@@ -1,13 +1,11 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { ReactElement } from 'react'
-import { addFollowerFollowing, removeFollowerFollowing, User, UserReducedInfo } from '../../firebase/client'
+import { User, UserReducedInfo } from '../../firebase/client'
 import Image from 'next/image'
 import css from 'styled-jsx/css'
 import Link from 'next/link'
-import useUser from '../../hooks/useUser'
-import Boton from '../Boton'
-import { colors } from '../../styles/StyleGlobal'
-import { useRouter } from 'next/router'
+
+import AvatarUserPage from './AvatarUserPager'
 
 interface ProfileProps {
   userA: UserReducedInfo;
@@ -25,21 +23,8 @@ export default function Avatar (
     userPage = false,
     userFullDataA = null
   }: ProfileProps): ReactElement {
-  const { userFullData } = useUser()
-  const router = useRouter()
   const myLoader = () => {
     return `${userA.avatar}`
-  }
-  const FollowingThisUser = () => {
-    return userFullData.following.includes(userFullDataA.id)
-  }
-  const handleFollowClick = () => {
-    addFollowerFollowing(userFullData, userFullDataA)
-    router.reload()
-  }
-  const handleUnFollowClick = () => {
-    removeFollowerFollowing(userFullData, userFullDataA)
-    router.reload()
   }
 
   return (
@@ -55,35 +40,7 @@ export default function Avatar (
           className="fotoAvatar"
         /></a></Link>
         {displayName && <strong>{userA.username}</strong>}
-
-        {userPage && userFullDataA && (<div className="details">
-          Email: {userA.email}
-        </div>)}
-{/* esto es engorroso. los followers y who you follow solo se muestran si estamos en la página del usuario SSR */}
-        {userPage && userFullDataA && (<div className="details">
-        <>Following: {userFullDataA.following.length} Followers: {userFullDataA.followers.length}.</>
-{/* Ahora estas ternarias sirven para distinguir si el user que esta en esta página es el mismo usuario o no */}
-
-           { userFullData && FollowingThisUser()
-             ? <Boton
-                  onClick={() => { handleUnFollowClick() }}
-                  botonBackGroundColor={colors.third}
-                  botonColor="white"
-                  disabled={!userFullData || userFullData.id === userFullDataA.id}
-                  style={{ marginLeft: '1rem' }}
-               >
-                  <>Dejar de seguir</>
-               </Boton>
-             : <Boton
-            onClick={() => { handleFollowClick() }}
-            botonBackGroundColor={colors.third}
-            botonColor="white"
-            disabled={!userFullData || userFullData.id === userFullDataA.id}
-            style={{ marginLeft: '1rem' }}
-          >
-            <>Seguir</>
-          </Boton>}
-        </div>)}
+        {userPage && <AvatarUserPage userFullDataA={userFullDataA}/>}
         <style jsx>{avatarStyle}</style>
       </div>
     </>

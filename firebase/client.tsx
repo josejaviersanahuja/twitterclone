@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+import { Dispatch, SetStateAction } from 'react'
 
 /* -----------------------------------
 Inicializamos firebase
@@ -16,7 +17,7 @@ const firebaseConfig = {
 }
 
 firebase.apps.length === 0 && firebase.initializeApp(firebaseConfig)
-const db = firebase.firestore()
+export const db = firebase.firestore()
 
 /* -----------------------------------
 Empezamos a trabajar con usuarios
@@ -100,7 +101,8 @@ export const amplifyUserInformation = (user: UserReducedInfo | undefined, callba
   }
 }
 // queremos añadir following followers
-export const addFollowerFollowing = (followerUser: User, userToFollow: User): void => {
+export const addFollowerFollowing = (followerUser: User, userToFollow: User, setUserAvatar : Dispatch<any>, setLoading : Dispatch<boolean>, setuserFullData : Dispatch<SetStateAction<User>>): void => {
+  setLoading(true)
   const finalFollowerUser : User = {
     ...followerUser,
     following: followerUser.following.concat([userToFollow.id])
@@ -111,6 +113,7 @@ export const addFollowerFollowing = (followerUser: User, userToFollow: User): vo
     .set(finalFollowerUser)
     .then(() => {
       console.log('Document successfully overwritten!')
+      setuserFullData(finalFollowerUser)
     })
     .catch((error) => {
       console.error('Error writing document: ', error)
@@ -126,6 +129,8 @@ export const addFollowerFollowing = (followerUser: User, userToFollow: User): vo
     .doc(userToFollow.id)
     .set(finalUserToFollow)
     .then(() => {
+      setUserAvatar(finalUserToFollow)
+      setLoading(false)
       console.log('Document successfully overwritten!')
     })
     .catch((error) => {
@@ -134,7 +139,8 @@ export const addFollowerFollowing = (followerUser: User, userToFollow: User): vo
     })
 }
 // ahora queremos dejar de seguir (condicion previa, followerUser ya sigue a userToFollow)
-export const removeFollowerFollowing = (followerUser: User, userToFollow: User): void => {
+export const removeFollowerFollowing = (followerUser: User, userToFollow: User, setUserAvatar : Dispatch<any>, setLoading : Dispatch<boolean>, setuserFullData : Dispatch<SetStateAction<User>>): void => {
+  setLoading(true)
   const finalFollowerUser : User = {
     ...followerUser,
     following: followerUser.following.filter(e => e !== userToFollow.id)
@@ -145,6 +151,7 @@ export const removeFollowerFollowing = (followerUser: User, userToFollow: User):
     .set(finalFollowerUser)
     .then(() => {
       console.log('Document successfully overwritten!')
+      setuserFullData(finalFollowerUser)
     })
     .catch((error) => {
       console.error('Error writing document: ', error)
@@ -160,6 +167,8 @@ export const removeFollowerFollowing = (followerUser: User, userToFollow: User):
     .doc(userToFollow.id)
     .set(finalUserToFollow)
     .then(() => {
+      setUserAvatar(finalUserToFollow)
+      setLoading(false)
       console.log('Document successfully overwritten!')
     })
     .catch((error) => {
