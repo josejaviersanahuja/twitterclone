@@ -14,18 +14,32 @@ const parseIntToHex = (number: number) : string => {
 }
 
 export const lighten = ({ color, porcentaje } : colorProps) : string => {
-  const numberColor :number = parseInt(color.slice(1), 16)
-  const diferencial : number = 16777215 - numberColor
-  const numberResult = Math.floor(numberColor + diferencial * porcentaje)
-  const stringResult = parseIntToHex(numberResult)
-  return `#${stringResult}`
+  const redColor :number = parseInt(color.slice(1, 3), 16)
+  const greenColor : number = parseInt(color.slice(3, 5), 16)
+  const blueColor : number = parseInt(color.slice(5, 7), 16)
+  const diffRedColor : number = 255 - redColor
+  const redResult = Math.floor(redColor + diffRedColor * porcentaje)
+  const diffGreenColor : number = 255 - greenColor
+  const greenResult = Math.floor(greenColor + diffGreenColor * porcentaje)
+  const diffBlueColor : number = 255 - blueColor
+  const blueResult = Math.floor(blueColor + diffBlueColor * porcentaje)
+  const stringRedResult = parseIntToHex(redResult)
+  const stringGreenResult = parseIntToHex(greenResult)
+  const stringBlueResult = parseIntToHex(blueResult)
+  return `#${stringRedResult}${stringGreenResult}${stringBlueResult}`
 }
 
 export const darken = ({ color, porcentaje } : colorProps) : string => {
-  const numberColor :number = parseInt(color.slice(1), 16)
-  const numberResult = Math.floor(numberColor - numberColor * porcentaje)
-  const stringResult = parseIntToHex(numberResult)
-  return `#${stringResult}`
+  const redColor :number = parseInt(color.slice(1, 3), 16)
+  const greenColor : number = parseInt(color.slice(3, 5), 16)
+  const blueColor : number = parseInt(color.slice(5, 7), 16)
+  const redResult = Math.floor(redColor - redColor * porcentaje)
+  const greenResult = Math.floor(greenColor - greenColor * porcentaje)
+  const blueResult = Math.floor(blueColor - blueColor * porcentaje)
+  const stringRedResult = parseIntToHex(redResult)
+  const stringGreenResult = parseIntToHex(greenResult)
+  const stringBlueResult = parseIntToHex(blueResult)
+  return `#${stringRedResult}${stringGreenResult}${stringBlueResult}`
 }
 
 export const addOpacity = ({ color, porcentaje } : colorProps) => {
