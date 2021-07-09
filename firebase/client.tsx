@@ -85,7 +85,6 @@ export const amplifyUserInformation = (user: UserReducedInfo | undefined, callba
             followers: doc.data().followers
           }
           callback(finalUser)
-          // console.log('Document data:', finalUser)
         } else {
           // replace de log for the setter with empty fllow(ers|ing)[] []
           console.log('No such document!')

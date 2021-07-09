@@ -19,16 +19,14 @@ export default function Home (): ReactElement {
 
   useEffect(() => {
     let unsuscribe
-    console.log(userFullData)
 
     if (user && userFullData) {
       unsuscribe = listenLatestTwits(setTimeline, userFullData)
-      console.log('escuchamos firestore')
+      // console.log('escuchamos firestore')
     }
     return () => {
       if (unsuscribe) {
         unsuscribe()
-        console.log('dejamos de escuchar firestore')
       }
     }
   }, [user, userFullData])

@@ -27,7 +27,6 @@ Handle Drag and Drop
   const handleDragEnter: React.DragEventHandler<HTMLTextAreaElement> = (
     e: React.DragEvent<HTMLTextAreaElement>
   ): void => {
-    console.log(e, 'dragenter')
     e.preventDefault()
     setdrag(DRAG_IMG_STATES.DRAG_OVER)
   }
@@ -35,7 +34,6 @@ Handle Drag and Drop
   const handleDragLeave: React.DragEventHandler<HTMLTextAreaElement> = (
     e: React.DragEvent<HTMLTextAreaElement>
   ): void => {
-    console.log(e, 'drag leave')
     e.preventDefault()
     setdrag(DRAG_IMG_STATES.NONE)
   }
@@ -43,7 +41,6 @@ Handle Drag and Drop
   const handleOnDrop: React.DragEventHandler<HTMLTextAreaElement> = (
     e: React.DragEvent<HTMLTextAreaElement>
   ): void => {
-    console.log('ondrop', e.dataTransfer.files[0])
     e.preventDefault()
     const file: File = e.dataTransfer.files[0]
     const task = uploadImage(file)
@@ -56,7 +53,6 @@ Handle Drag and Drop
   const handleInputFileChange: React.ChangeEventHandler<HTMLInputElement> = (
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    console.log('onInputFile', e.target.files[0])
     const file: File = e.target.files[0]
     const task = uploadImage(file)
     settask(task)

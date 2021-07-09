@@ -43,7 +43,6 @@ export default function AvatarUserPager ({ userFullDataA }: Props): ReactElement
         setLoading(false)
       }).catch(err => setError(err))
   }, [])
-  console.log(FollowingThisUser())
 
   if (error) { return <>Something wrong happened fetching the userAvatar. please refresh</> }
   return (
