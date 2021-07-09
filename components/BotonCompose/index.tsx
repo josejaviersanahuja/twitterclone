@@ -24,7 +24,7 @@ export default function index (): ReactElement {
           background: ${colors.third};
         }
         div:hover {
-          background: ${lighten({ color: colors.third, porcentaje: 0.05 })};
+          background: ${lighten({ color: colors.third, porcentaje: 0.1 })};
         }
       `}</style>
     </>

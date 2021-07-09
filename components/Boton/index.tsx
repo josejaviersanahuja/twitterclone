@@ -26,7 +26,7 @@ export default function Boton ({ children, onClick, botonBackGroundColor, botonC
       <style jsx>{botonStyle}</style>
       <style jsx>{`
           button::after {
-              background: ${lighten({ color: colors.third, porcentaje: 0.02 })};
+              background: ${lighten({ color: colors.third, porcentaje: 0.1 })};
           }
         `}</style>
     </>
