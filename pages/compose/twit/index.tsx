@@ -183,4 +183,7 @@ const composeStyle = css`
  small {
    float:right;
  }
+ label:hover {
+   cursor:pointer;
+ }
 `
