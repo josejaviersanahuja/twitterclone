@@ -50,22 +50,6 @@ export default function StatusTwit ({ twit } : StatusTwitProps): ReactElement {
 }
 
 export const getServerSideProps : GetServerSideProps<{[key: string]: any}> = async (context : GetServerSidePropsContext) : Promise<GetServerSidePropsResult<{[key: string]: any}>> => {
-  let storedData : TwitInfo = {
-    twitID: '',
-    content: '',
-    createdAt: 0,
-    imgURL: null,
-    likes: 0,
-    shared: 0,
-    userRef: '',
-    user: {
-      avatar: '',
-      username: '',
-      email: '',
-      id: ''
-    }
-  }
-
   const { params, res } = context
   const { id } = params
 
@@ -80,7 +64,7 @@ export const getServerSideProps : GetServerSideProps<{[key: string]: any}> = asy
 
   // await fetch(`http://localhost:3000/api/twit/${id}`)
   if (apiResponse) {
-    storedData = apiResponse// await JSON.parse(apiResponse)
+    const storedData = apiResponse// await JSON.parse(apiResponse)
     const twitID : string = Array.isArray(id) ? id[0] : id
     const content : string = storedData.content
     const user: UserReducedInfo = storedData.user
