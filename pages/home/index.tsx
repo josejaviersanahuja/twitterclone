@@ -14,13 +14,15 @@ import Footer from '../../components/Footer'
 
 export default function Home (): ReactElement {
   const [timeline, setTimeline] = useState<TwitInfo[] | void>([])
-  const { user }: ValidUser | undefined | null = useUser()
+  const { user, userFullData }: ValidUser | undefined | null = useUser()
   const router = useRouter()
 
   useEffect(() => {
     let unsuscribe
-    if (user) {
-      unsuscribe = listenLatestTwits(setTimeline)
+    console.log(userFullData)
+
+    if (user && userFullData) {
+      unsuscribe = listenLatestTwits(setTimeline, userFullData)
       console.log('escuchamos firestore')
     }
     return () => {
@@ -29,7 +31,7 @@ export default function Home (): ReactElement {
         console.log('dejamos de escuchar firestore')
       }
     }
-  }, [user])
+  }, [user, userFullData])
 
   useEffect(() => {
     user === undefined && router.replace('/')

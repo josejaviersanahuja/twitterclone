@@ -105,7 +105,7 @@ export const addFollowerFollowing = (followerUser: User, userToFollow: User, set
   setLoading(true)
   const finalFollowerUser : User = {
     ...followerUser,
-    following: followerUser.following.concat([userToFollow.id])
+    following: followerUser.following.concat([userToFollow.email])
   }
 
   db.collection(process.env.NEXT_PUBLIC_users_collection)
@@ -122,7 +122,7 @@ export const addFollowerFollowing = (followerUser: User, userToFollow: User, set
 
   const finalUserToFollow : User = {
     ...userToFollow,
-    followers: userToFollow.followers.concat([followerUser.id])
+    followers: userToFollow.followers.concat([followerUser.email])
   }
 
   db.collection(process.env.NEXT_PUBLIC_users_collection)
@@ -143,7 +143,7 @@ export const removeFollowerFollowing = (followerUser: User, userToFollow: User, 
   setLoading(true)
   const finalFollowerUser : User = {
     ...followerUser,
-    following: followerUser.following.filter(e => e !== userToFollow.id)
+    following: followerUser.following.filter(e => e !== userToFollow.email)
   }
 
   db.collection(process.env.NEXT_PUBLIC_users_collection)
@@ -160,7 +160,7 @@ export const removeFollowerFollowing = (followerUser: User, userToFollow: User, 
 
   const finalUserToFollow : User = {
     ...userToFollow,
-    followers: userToFollow.followers.filter(e => e !== followerUser.id)
+    followers: userToFollow.followers.filter(e => e !== followerUser.email)
   }
 
   db.collection(process.env.NEXT_PUBLIC_users_collection)
@@ -318,9 +318,11 @@ export const extractTwitsFromFirebase = (
   return latestTwits
 }
 // este listen debe incluir a todos los users following y al usuario conectado
-export const listenLatestTwits = (callback) => {
+export const listenLatestTwits = (callback, userFullData : User) => {
+  const arrayDeUserRefs = userFullData.following.concat([userFullData.email])
   return db
     .collection(process.env.NEXT_PUBLIC_twits_collection)
+    .where('userRef', 'in', arrayDeUserRefs)
     .orderBy('createdAt', 'desc')
     .limit(20)
     .onSnapshot((snapshot) => {

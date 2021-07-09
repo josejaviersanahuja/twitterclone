@@ -18,8 +18,8 @@ export default function AvatarUserPager ({ userFullDataA }: Props): ReactElement
   const [error, setError] = useState(null)
   const FollowingThisUser = () => {
     if (userAvatar && userFullData) {
-      console.log(userAvatar.followers, userFullData.following)
-      return userFullData.following.includes(userAvatar.id) && userAvatar.followers.includes(userFullData.id)
+      // console.log(userAvatar.followers, userFullData.following)
+      return userFullData.following.includes(userAvatar.email) && userAvatar.followers.includes(userFullData.email)
     } else {
       return undefined
     }

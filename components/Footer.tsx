@@ -10,7 +10,7 @@ import { colors } from '../styles/StyleGlobal'
 export default function Footer (): ReactElement {
   return (<>
         <footer>
-          <Link href="/"><a><HomeIcon /></a></Link>
+          <Link href="/home"><a><HomeIcon /></a></Link>
           <Link href="/global"><a><GlobeIcon /></a></Link>
           <Link href="/allusers"><a><UsersIcon /></a></Link>
         </footer>
