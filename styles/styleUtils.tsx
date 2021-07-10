@@ -5,11 +5,7 @@ interface colorProps {
 
 const parseIntToHex = (number: number) : string => {
   let cerosIzq = ''
-  if (number < 1048576) { cerosIzq = '0' }
-  if (number < 65536) { cerosIzq = '00' }
-  if (number < 4096) { cerosIzq = '000' }
-  if (number < 256) { cerosIzq = '0000' }
-  if (number < 16) { cerosIzq = '00000' }
+  if (number < 16) { cerosIzq = '0' }
   return cerosIzq + number.toString(16)
 }
 

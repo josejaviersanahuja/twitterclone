@@ -15,6 +15,8 @@ interface BotonProps {
 }
 
 export default function Boton ({ children, onClick, botonBackGroundColor, botonColor, className = '', disabled = false, style }: BotonProps): ReactElement {
+  console.log(colors.third, lighten({ color: colors.third, porcentaje: 0.1 }))
+
   return (
     <>
       <button
@@ -60,7 +62,7 @@ const botonStyle = css`
               transform-origin: 0 100%;
               transform: scaley(.05);
               border-radius: .25rem;
-              mix-blend-mode: difference;
+              mix-blend-mode: color-burn;
               transition: transform .25s;
               content: ''
           }
